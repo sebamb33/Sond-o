@@ -1,24 +1,25 @@
 {
   "compilerOptions": {
+    "target": "es5", // Spécifie la cible de la sortie ECMAScript.
     "lib": [
       "dom",
       "dom.iterable",
       "esnext"
-    ],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true,
-    "baseUrl": ".",
-    "paths": {
+    ], // Spécifie une liste de fichiers de bibliothèque.
+    "allowJs": true, // Autorise la compilation de fichiers JavaScript.
+    "skipLibCheck": true, // Ignore les vérifications de type pour les fichiers de déclaration.
+    "strict": true, // Active tous les contrôles de type strict.
+    "forceConsistentCasingInFileNames": true, // Empêche les références inconsistantes à un même fichier.
+    "noEmit": true, // Ne génère pas de fichiers de sortie (.js, .jsx).
+    "esModuleInterop": true, // Permet d'importer des modules ES6 par défaut.
+    "module": "esnext", // Spécifie le module de sortie de code.
+    "moduleResolution": "node", // Détermine la stratégie de résolution des modules.
+    "resolveJsonModule": true, // Permet l'importation de fichiers .json.
+    "isolatedModules": true, // Garantit que chaque fichier peut être transpilé séparément.
+    "jsx": "preserve", // Préserve les balises JSX; c'est Next.js qui s'en occupe.
+    "incremental": true, // Active la compilation incrémentielle.
+    "baseUrl": ".", // Permet d'importer des modules relativement à la base de l'URL.
+    "paths": { // Spécifie les chemins d'accès pour les alias.
       "@/*": [
         "src/*"
       ]
@@ -29,15 +30,16 @@
       }
     ]
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    "backend/**/*"
+  "include": [ // Inclut ces fichiers dans le processus de compilation.
+    "next-env.d.ts", // Typage spécifique à Next.js.
+    "**/*.ts", // Inclut tous les fichiers TypeScript.
+    "**/*.tsx" // Inclut tous les fichiers TypeScript React.
+    ,
+    ".next/types/**/*.ts"
   ],
-  "exclude": [
-    "node_modules",
-    "dist"
+  "exclude": [ // Exclut ces dossiers du processus de compilation.
+    "node_modules", // Exclut le dossier node_modules.
+    ".next", // Exclut le dossier de build de Next.js.
+    "out" // Exclut le dossier de sortie si vous exportez statiquement.
   ]
 }
