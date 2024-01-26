@@ -40,7 +40,7 @@ export default function Form() {
                     className="border-4 border-secondary px-2 py-1 rounded-lg w-full"
                 />
             </div>
-            <button type="submit" className="bg-secondary rounded-lg w-36 h-14 ">Se connecter</button>
+            <button type="submit" className="bg-secondary rounded-lg w-36 h-14">Se connecter</button>
         </form>
     );
 }

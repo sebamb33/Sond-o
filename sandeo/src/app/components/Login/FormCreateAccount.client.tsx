@@ -19,28 +19,53 @@ export default function Form() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Nom:
-        <input type="text" name="firstname" />
-      </label>
+      <form onSubmit={handleSubmit} className="flex-row rounded-md p-20">
+          <div className="flex-row h-36">
+              <label className="text-lg text-primary font-semibold" htmlFor="email">
+                  Nom:
+              </label>
+              <input
+                  type="firstname"
+                  name="firstname"
+                  id="firstname"
+                  className="border-4 border-secondary px-2 py-1 rounded-lg w-full"
+              />
+          </div>
+          <div className="flex-row h-36">
+              <label className="text-lg text-primary font-semibold" htmlFor="email">
+                  Prénom
+              </label>
+              <input
+                  type="lastname"
+                  name="lastname"
+                  id="lastname"
+                  className="border-4 border-secondary px-2 py-1 rounded-lg w-full"
+              />
+          </div>
+          <div className="flex-row h-36">
+              <label className="text-lg text-primary font-semibold" htmlFor="email">
+                  Email:
+              </label>
+              <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  className="border-4 border-secondary px-2 py-1 rounded-lg w-full"
+              />
+          </div>
+          <div className="flex-row h-36">
+              <label className="text-lg text-primary font-semibold" htmlFor="email">
+                  Mot de passe:
+              </label>
+              <input
+                  type="password"
+                  name="password"
+                  id="password"
+                  className="border-4 border-secondary px-2 py-1 rounded-lg w-full"
+              />
+          </div>
 
-      <label>
-        Prénom:
-        <input type="text" name="lastname" />
-      </label>
-
-      <label>
-        Email:
-        <input type="email" name="email" />
-      </label>
-
-      <label>
-        Mot de passe:
-        <input type="password" name="password" />
-      </label>
-
-      <button type="submit">S'inscrire</button>
-    </form>
+          <button type="submit" className="bg-secondary rounded-lg w-36 h-14">S'inscrire</button>
+      </form>
   );
 }
