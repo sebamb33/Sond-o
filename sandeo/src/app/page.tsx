@@ -1,23 +1,16 @@
 // src/app/page.tsx
-
-import React from 'react';
-import Form from './components/Form.client';
-import FormConnection from './components/FormConnexion.client';
+import React, { useState } from 'react';
+import Form from './components/Login/FormCreateAccount.client';
+import FormConnection from './components/Login/FormConnexion.client';
 import "./globals.css";
+import LoginClient from "@/app/components/Login/Login.client";
 
 
 export default function Page() {
+
   return (
-      <div className="flex h-screen ">
-          <div className="leftPart w-11/12 bg-secondary">
-
-          </div>
-          <div className="rightPart flex-col justify-center items-center align h-full w-6/12">
-              <h1 className='text-4xl'>Sandeo</h1>
-              <div className="hidden"><Form/></div>
-              <FormConnection/>
-          </div>
-
+      <div className="flex h-screen bg-secondary">
+        <LoginClient/>
       </div>
 
   );

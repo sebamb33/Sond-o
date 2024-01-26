@@ -1,5 +1,6 @@
 /* Import de la police Nunito depuis Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat+Brush&display=swap');
 
 /* Utilisation de Tailwind CSS */
 @import 'tailwindcss/base';
@@ -10,3 +11,23 @@
 * {
     font-family: 'Nunito', sans-serif;
 }
+.titleWebsite{
+    font-family: 'Caveat Brush', cursive;
+    font-weight: 600;
+}
+.formTransition {
+    transition: opacity 3s, filter 3s;
+}
+
+.formHidden {
+    opacity: 0;
+    filter: blur(5px);
+    display: none;
+}
+
+.formVisible {
+    opacity: 1;
+    filter: blur(0);
+    display: block;
+}
+
