@@ -26,8 +26,20 @@ Pour lancer le projet sur votre machine locale à des fins de développement et 
    ```sh
    git clone https://github.com/sebamb33/Sond-o.git
    cd sondeo
-    
-2. Installer et lancer Docker sur votre machine puis exécuter la commande
-    ```sh
-   docker-compose up --build
 
+   ```
+
+2. Initilisé le front :
+
+   ```sh
+   npm i
+
+   ```
+
+3. Initialisé le back
+   ```sh
+   cd backend/sandeoDB/src
+   mv exemple-data-source.ts data-source.ts #Change value for connect BD
+   npm i
+   npm start
+   ```

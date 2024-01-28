@@ -5,7 +5,6 @@ import { Question } from "./entity/Question";
 import { Formulary } from "./entity/Formulary";
 import { Choice } from "./entity/Choice";
 
-// Incluez directement les classes d'entité dans le tableau entities
 export const AppDataSource = new DataSource({
   type: "mysql",
   host: "localhost",
@@ -15,7 +14,7 @@ export const AppDataSource = new DataSource({
   database: "sandeo",
   synchronize: true,
   logging: false,
-  entities: [User, Question, Formulary, Choice], // Ajoutez ici toutes vos classes d'entité
+  entities: [User, Question, Formulary, Choice],
   migrations: [],
   subscribers: [],
 });
