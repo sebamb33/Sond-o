@@ -1,22 +1,17 @@
 import { AppDataSource } from "./data-source";
-import { User } from "./entity/User";
-
+import express from "express";
+const app = express();
 AppDataSource.initialize()
   .then(async () => {
-    console.log("Inserting a new user into the database...");
-    const user = new User();
-    user.firstname = "Timber";
-    user.lastname = "Saw";
-    user.mail = "timber@mail.com";
-    await AppDataSource.manager.save(user);
-    console.log("Saved a new user with id: " + user.id);
-
-    console.log("Loading users from the database...");
-    const users = await AppDataSource.manager.find(User);
-    console.log("Loaded users: ", users);
-
-    console.log(
-      "Here you can setup and run express / fastify / any other framework."
-    );
+    console.log("Relation avec la base de donnée effectué");
   })
   .catch((error) => console.log(error));
+
+// Express server
+app.get("/", (req, res) => {
+  res.send("Hello, World!");
+});
+const port = process.env.PORT || 3000; // Port par défaut : 3000
+app.listen(port, () => {
+  console.log(`Serveur en cours d'exécution sur le port ${port}`);
+});
