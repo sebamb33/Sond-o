@@ -17,7 +17,7 @@ userRouter.get("/connect", async (req, res) => {
         password: password,
       },
     });
-    let token;
+    let token = {};
     if (user) {
       token = jwt.sign({ userID: user.id }, jwtSecret);
     }
