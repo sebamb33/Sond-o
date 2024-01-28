@@ -30,8 +30,10 @@ yarn-error.log*
 
 # vercel
 .vercel
-# prisma
+# TypeORM
 backend/generated/
+backend/node_modules/
+backend/sandeoDB/src/data-source
 
 # typescript
 *.tsbuildinfo
