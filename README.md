@@ -43,3 +43,8 @@ Pour lancer le projet sur votre machine locale à des fins de développement et 
    npm i
    npm start
    ```
+
+Executé les migrations:
+    ```sh
+    npx typeorm-ts-node-commonjs  migration:run -d src/data-source.ts
+    ```
