@@ -1,9 +1,5 @@
 import "reflect-metadata";
 import { DataSource } from "typeorm";
-import { User } from "./entity/User";
-import { Question } from "./entity/Question";
-import { Formulary } from "./entity/Formulary";
-import { Choice } from "./entity/Choice";
 
 export const AppDataSource = new DataSource({
   type: "mysql",
@@ -14,7 +10,7 @@ export const AppDataSource = new DataSource({
   database: "sandeo",
   synchronize: true,
   logging: false,
-  entities: [User, Question, Formulary, Choice],
+  entities: ["src/entity/*.ts"],
   migrations: ["src/migration/*.ts"],
   subscribers: [],
   migrationsTableName: "custom_migration_table",
