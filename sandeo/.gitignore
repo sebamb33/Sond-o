@@ -32,6 +32,8 @@ yarn-error.log*
 .vercel
 # prisma
 backend/generated/
+backend/node_modules/
+backend/sandeoDB/src/data-source
 
 # typescript
 *.tsbuildinfo
