@@ -15,6 +15,7 @@ export const AppDataSource = new DataSource({
   synchronize: true,
   logging: false,
   entities: [User, Question, Formulary, Choice],
-  migrations: [],
+  migrations: ["src/migration/*.ts"],
   subscribers: [],
+  migrationsTableName: "custom_migration_table",
 });
