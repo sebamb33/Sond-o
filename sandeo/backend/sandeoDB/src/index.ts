@@ -1,6 +1,10 @@
 import { AppDataSource } from "./data-source";
 import express from "express";
-import userRouter from "./routes/userRoutes";
+import route from "./routes/route";
+import cors from "cors";
+import dotenv from "dotenv";
+dotenv.config;
+console.log(process.env.JWT_SECRET);
 const app = express();
 AppDataSource.initialize()
   .then(async () => {
@@ -12,8 +16,15 @@ AppDataSource.initialize()
 app.get("/", (req, res) => {
   res.send("Hello, World!");
 });
+//cors
+app.use(
+  cors({
+    origin: "http://localhost:3001",
+  })
+);
+
 //import route
-app.use("/user", userRouter);
+app.use("/api", route);
 const port = process.env.PORT || 3000; // Port par défaut : 3000
 app.listen(port, () => {
   console.log(`Serveur en cours d'exécution sur le port ${port}`);

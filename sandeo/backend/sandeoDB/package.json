@@ -10,7 +10,7 @@
     "typescript": "4.5.2"
   },
   "dependencies": {
-    "dotenv": "^16.4.1",
+    "cors": "^2.8.5",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.2",
     "mysql": "npm:mysql2@^3.9.0",

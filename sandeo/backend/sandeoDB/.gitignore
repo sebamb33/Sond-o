@@ -5,3 +5,7 @@ build/
 tmp/
 .env
 temp/
+.env*
+.flaskenv*
+!.env.project
+!.env.vault

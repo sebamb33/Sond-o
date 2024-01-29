@@ -4,20 +4,21 @@ import { AppDataSource } from "../data-source";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 
+dotenv.config();
 const userRouter = express.Router();
 const jwtSecret = process.env.JWT_SECRET;
-
 // Route pour récupérer les utilisateurs
-userRouter.get("/connect", async (req, res) => {
+userRouter.post("/connect", async (req, res) => {
   try {
     const { mail, password } = req.query as { mail: string; password: string };
+    console.log(mail);
     const user = await AppDataSource.getRepository(User).findOne({
       where: {
         mail: mail,
         password: password,
       },
     });
-    let token = {};
+    let token = jwtSecret;
     if (user) {
       token = jwt.sign({ userID: user.id }, jwtSecret);
     }
