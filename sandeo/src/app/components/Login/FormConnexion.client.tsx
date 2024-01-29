@@ -1,20 +1,37 @@
-// src/components/Login/FormCreateAccount.client.tsx
-"use client";
 import React from "react";
 
 export default function Form() {
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
+    const formData = new FormData(e.currentTarget);
 
     const data = {
-      email: formData.get("email"),
+      mail: formData.get("email"),
       password: formData.get("password"),
     };
-    //const response = await fetch("/user/conn");
-    console.log(data);
-  };
 
+    try {
+      console.log(process.env.NEXT_PUBLIC_API_URL);
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/user/connect`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Problème lors de la connexion");
+      }
+      const responseData = await response.json();
+      console.log("Réponse de l'API", responseData);
+    } catch (error) {
+      console.error("Erreur lors de la connexion", error);
+    }
+  };
   return (
     <form onSubmit={handleSubmit} className="flex-row rounded-md p-20">
       <div className="h-36 flex-row">
