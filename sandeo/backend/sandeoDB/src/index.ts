@@ -22,6 +22,7 @@ app.use(
     origin: "http://localhost:3001",
   })
 );
+app.use(express.json());
 
 //import route
 app.use("/api", route);
