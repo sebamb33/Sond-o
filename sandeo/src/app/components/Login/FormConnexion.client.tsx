@@ -3,7 +3,7 @@
 import React from "react";
 
 export default function Form() {
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     const formData = new FormData(e.target);
 
@@ -13,6 +13,14 @@ export default function Form() {
     };
     //const response = await fetch("/user/conn");
     console.log(data);
+    const response = await fetch("/user/connect", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    console.log("Response", response);
   };
 
   return (

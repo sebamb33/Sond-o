@@ -13,7 +13,6 @@ export default function Form() {
       email: formData.get("email"),
       password: formData.get("password"),
     };
-
     // Ici, vous pouvez traiter ou envoyer les données du formulaire
     console.log(data);
   };
