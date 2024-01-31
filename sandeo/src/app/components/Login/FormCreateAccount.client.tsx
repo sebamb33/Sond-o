@@ -1,7 +1,7 @@
 // src/components/Login/FormCreateAccount.client.tsx
 "use client";
 import React from "react";
-import bcrypt from "bcrypt-ts";
+import bcrypt from "bcryptjs";
 
 export default function FormCreateAccount() {
   const handleSubmit = async (e: any) => {

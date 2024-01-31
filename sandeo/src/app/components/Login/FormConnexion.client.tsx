@@ -1,14 +1,21 @@
 import React from "react";
-import bcrypt from "bcrypt-ts";
+import bcrypt from "bcryptjs";
+
 export default function Form() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
 
+    const formData = new FormData(e.currentTarget);
+    const saltRounds = 10;
     const hashPassword = async (password: string): Promise<string> => {
-      const saltRounds = 10;
-      return bcrypt.hash(password, saltRounds);
+      try {
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+        return hashedPassword;
+      } catch (error) {
+        throw error;
+      }
     };
+
     let hashedPassword: string = "";
     const password = formData.get("password");
     if (password && typeof password === "string") {
