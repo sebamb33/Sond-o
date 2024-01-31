@@ -37,19 +37,20 @@ userRouter.post("/connect", async (req, res) => {
 
 //Route pour crée un compte
 userRouter.post("/create", async (req, res) => {
+  console.log("URL:", req.url);
+  console.log("Method:", req.method);
+  console.log("Body:", req.body);
   try {
-    const { mail, password, firstname, lastname } = req.body as {
-      mail: string;
+    const { email, password, firstname, lastname } = req.body as {
+      email: string;
       password: string;
       firstname: string;
       lastname: string;
     };
-    console.log("URL:", req.url);
-    console.log("Method:", req.method);
-    console.log("Body:", req.body);
+
     const existingUser = await AppDataSource.getRepository("User").findOne({
       where: {
-        mail: mail,
+        mail: email,
       },
     });
     if (existingUser) {
@@ -64,16 +65,20 @@ userRouter.post("/create", async (req, res) => {
           firstname: firstname,
           lastname: lastname,
           password: password,
-          mail: mail,
+          mail: email,
         })
-        .returning("*")
         .execute();
-      const token = jwt.sign(
-        { userID: newUser.generatedMaps[0].id },
-        jwtSecret
-      );
+      const userId = newUser.identifiers[0].id;
+      const token = jwt.sign({ userID: userId }, jwtSecret);
+
+      const insertedUser = await AppDataSource.getRepository("User").findOne({
+        where: {
+          id: userId,
+        },
+      });
+
       //Retour de l'utilisateur
-      res.status(201).json({ user: newUser.generatedMaps[0], token });
+      res.status(201).json({ user: insertedUser, token });
     }
   } catch (error) {
     console.error(error);
