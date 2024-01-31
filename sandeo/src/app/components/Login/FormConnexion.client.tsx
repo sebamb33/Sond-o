@@ -1,5 +1,5 @@
 import React from "react";
-import bcrypt from "bcrypt";
+import bcrypt from "bcrypt-ts";
 export default function Form() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
