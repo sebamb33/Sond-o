@@ -72,6 +72,7 @@ userRouter.post("/create", async (req, res) => {
         { userID: newUser.generatedMaps[0].id },
         jwtSecret
       );
+      //Retour de l'utilisateur
       res.status(201).json({ user: newUser.generatedMaps[0], token });
     }
   } catch (error) {
