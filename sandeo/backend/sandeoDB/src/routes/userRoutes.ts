@@ -3,6 +3,7 @@ import { User } from "../entity/User";
 import { AppDataSource } from "../data-source";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
+import { useRouter } from "next/router";
 
 dotenv.config();
 const userRouter = express.Router();
@@ -77,6 +78,16 @@ userRouter.post("/create", async (req, res) => {
     res
       .status(500)
       .json({ error: "Une erreur c'est produite durant la création" });
+  }
+});
+
+//Route pour vérifier token
+userRouter.post("/verifyToken", async (req, res) => {
+  try {
+  } catch (Error) {
+    res.status(500).json({
+      error: "Une erreur c'est produite durant la vérification du TOKEN",
+    });
   }
 });
 
