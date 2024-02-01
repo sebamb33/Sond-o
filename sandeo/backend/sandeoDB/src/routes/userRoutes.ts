@@ -3,6 +3,7 @@ import { User } from "../entity/User";
 import { AppDataSource } from "../data-source";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
+import { useRouter } from "next/router";
 
 dotenv.config();
 const userRouter = express.Router();
@@ -10,9 +11,6 @@ const jwtSecret = process.env.JWT_SECRET;
 // Route pour récupérer les utilisateurs
 userRouter.post("/connect", async (req, res) => {
   try {
-    console.log("URL:", req.url);
-    console.log("Method:", req.method);
-    console.log("Body:", req.body);
     const { mail, password } = req.body as { mail: string; password: string };
 
     const user = await AppDataSource.getRepository(User).findOne({
@@ -27,7 +25,6 @@ userRouter.post("/connect", async (req, res) => {
     }
     res.json({ user, token });
   } catch (error) {
-    console.error(error);
     res.status(500).json({
       error:
         "Une erreur s'est produite lors de la récupération des utilisateurs.",
@@ -37,9 +34,6 @@ userRouter.post("/connect", async (req, res) => {
 
 //Route pour crée un compte
 userRouter.post("/create", async (req, res) => {
-  console.log("URL:", req.url);
-  console.log("Method:", req.method);
-  console.log("Body:", req.body);
   try {
     const { email, password, firstname, lastname } = req.body as {
       email: string;
@@ -81,10 +75,19 @@ userRouter.post("/create", async (req, res) => {
       res.status(201).json({ user: insertedUser, token });
     }
   } catch (error) {
-    console.error(error);
     res
       .status(500)
       .json({ error: "Une erreur c'est produite durant la création" });
+  }
+});
+
+//Route pour vérifier token
+userRouter.post("/verifyToken", async (req, res) => {
+  try {
+  } catch (Error) {
+    res.status(500).json({
+      error: "Une erreur c'est produite durant la vérification du TOKEN",
+    });
   }
 });
 

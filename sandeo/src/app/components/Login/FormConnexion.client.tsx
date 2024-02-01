@@ -1,6 +1,7 @@
 import React from "react";
 import bcrypt from "bcryptjs";
-
+import router from "next/router";
+import Cookies from "js-cookie";
 export default function Form() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -44,6 +45,8 @@ export default function Form() {
       }
       const responseData = await response.json();
       console.log("Réponse de l'API", responseData);
+      Cookies.set("token", responseData.token);
+      router.push("/");
     } catch (error) {
       console.error("Erreur lors de la connexion", error);
     }

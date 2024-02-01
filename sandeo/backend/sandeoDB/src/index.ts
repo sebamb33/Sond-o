@@ -2,8 +2,7 @@ import { AppDataSource } from "./data-source";
 import express from "express";
 import route from "./routes/route";
 import cors from "cors";
-import dotenv from "dotenv";
-dotenv.config;
+require("dotenv").config();
 console.log(process.env.JWT_SECRET);
 const app = express();
 AppDataSource.initialize()
