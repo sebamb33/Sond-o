@@ -24,14 +24,15 @@ export default function Form() {
           body: JSON.stringify(data),
         }
       );
-
-      if (!response.ok) {
-        throw new Error("Problème lors de la connexion");
+      console.log(response);
+      if (response.ok) {
+        const responseData = await response.json();
+        console.log("Réponse de l'API", responseData);
+        Cookies.set("token", responseData.token);
+        router.push("../pages/homePage");
+      } else {
+        alert("Mot de passe incorect");
       }
-      const responseData = await response.json();
-      console.log("Réponse de l'API", responseData);
-      Cookies.set("token", responseData.token);
-      router.push("../pages/homePage");
     } catch (error) {
       console.error("Erreur lors de la connexion", error);
     }
