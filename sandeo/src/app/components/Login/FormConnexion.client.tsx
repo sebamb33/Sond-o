@@ -1,7 +1,8 @@
 import React from "react";
-import router from "next/router";
 import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 export default function Form() {
+  const router = useRouter();
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -28,7 +29,7 @@ export default function Form() {
         const responseData = await response.json();
         console.log("Réponse de l'API", responseData);
         Cookies.set("token", responseData.token);
-        router.push("../pages/homePage");
+        router.push("/pages/homePage");
       } else {
         alert("Mot de passe incorect");
       }
