@@ -4,26 +4,43 @@ import { AppDataSource } from "../data-source";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import { useRouter } from "next/router";
+import bcrypt from "bcryptjs";
+import { error } from "console";
 
 dotenv.config();
+const salt: number = 10;
 const userRouter = express.Router();
 const jwtSecret = process.env.JWT_SECRET;
+const hashPassword = async (password: any) => {
+  return bcrypt.hash(password, salt);
+};
 // Route pour récupérer les utilisateurs
 userRouter.post("/connect", async (req, res) => {
   try {
     const { mail, password } = req.body as { mail: string; password: string };
+    console.log(req.body);
 
-    const user = await AppDataSource.getRepository(User).findOne({
+    let user = await AppDataSource.getRepository(User).findOne({
       where: {
         mail: mail,
-        password: password,
       },
     });
     let token = "";
     if (user) {
-      token = jwt.sign({ userID: user.id }, jwtSecret);
+      //Pick a hashed password in database
+      bcrypt.compare(password, user.password, function (err, result) {
+        if (result) {
+          token = jwt.sign({ userID: user.id }, jwtSecret);
+          //Delete the password return for front
+          delete user.password;
+          res.json({ user, token });
+        } else {
+          res.status(401).json({
+            error: "Le mot de passe n'est pas correct",
+          });
+        }
+      });
     }
-    res.json({ user, token });
   } catch (error) {
     res.status(500).json({
       error:
@@ -42,6 +59,10 @@ userRouter.post("/create", async (req, res) => {
       lastname: string;
     };
 
+    let hashedPassword = "";
+    if (password && typeof password === "string") {
+      hashedPassword = await hashPassword(password);
+    }
     const existingUser = await AppDataSource.getRepository("User").findOne({
       where: {
         mail: email,
@@ -58,7 +79,7 @@ userRouter.post("/create", async (req, res) => {
         .values({
           firstname: firstname,
           lastname: lastname,
-          password: password,
+          password: hashedPassword,
           mail: email,
         })
         .execute();
