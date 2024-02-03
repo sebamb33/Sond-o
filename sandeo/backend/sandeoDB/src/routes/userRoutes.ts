@@ -84,6 +84,7 @@ userRouter.post("/create", async (req, res) => {
 //Route pour vérifier token
 userRouter.post("/verifyToken", async (req, res) => {
   try {
+    console.log(req.body);
   } catch (Error) {
     res.status(500).json({
       error: "Une erreur c'est produite durant la vérification du TOKEN",

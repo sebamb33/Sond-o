@@ -50,10 +50,10 @@ export default function FormCreateAccount() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex-row rounded-md p-20">
+    <form onSubmit={handleSubmit} className="flex-row p-20 rounded-md">
       <div className="flex-row h-36">
         <label
-          className="text-lg text-primary font-semibold"
+          className="text-lg font-semibold text-primary"
           htmlFor="firstname"
         >
           Nom:
@@ -62,12 +62,12 @@ export default function FormCreateAccount() {
           type="text"
           name="firstname"
           id="firstname"
-          className="border-4 border-secondary px-2 py-1 rounded-lg w-full"
+          className="w-full px-2 py-1 border-4 rounded-lg border-secondary"
         />
       </div>
       <div className="flex-row h-36">
         <label
-          className="text-lg text-primary font-semibold"
+          className="text-lg font-semibold text-primary"
           htmlFor="lastname"
         >
           Prénom:
@@ -76,23 +76,23 @@ export default function FormCreateAccount() {
           type="text"
           name="lastname"
           id="lastname"
-          className="border-4 border-secondary px-2 py-1 rounded-lg w-full"
+          className="w-full px-2 py-1 border-4 rounded-lg border-secondary"
         />
       </div>
       <div className="flex-row h-36">
-        <label className="text-lg text-primary font-semibold" htmlFor="email">
+        <label className="text-lg font-semibold text-primary" htmlFor="email">
           Email:
         </label>
         <input
           type="email"
           name="email"
           id="email"
-          className="border-4 border-secondary px-2 py-1 rounded-lg w-full"
+          className="w-full px-2 py-1 border-4 rounded-lg border-secondary"
         />
       </div>
       <div className="flex-row h-36">
         <label
-          className="text-lg text-primary font-semibold"
+          className="text-lg font-semibold text-primary"
           htmlFor="password"
         >
           Mot de passe:
@@ -101,11 +101,11 @@ export default function FormCreateAccount() {
           type="password"
           name="password"
           id="password"
-          className="border-4 border-secondary px-2 py-1 rounded-lg w-full"
+          className="w-full px-2 py-1 border-4 rounded-lg border-secondary"
         />
       </div>
 
-      <button type="submit" className="bg-secondary rounded-lg w-36 h-14">
+      <button type="submit" className="rounded-lg bg-secondary w-36 h-14">
         inscrire
       </button>
     </form>
