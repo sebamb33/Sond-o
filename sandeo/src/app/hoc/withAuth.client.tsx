@@ -19,6 +19,7 @@ const withAuth = async (WrappedComponent: any) => {
         body: JSON.stringify(data),
       }
     );
+    console.log("Réponse du hoc : " + response);
     if (!token) {
       router.push("/login");
       return null;

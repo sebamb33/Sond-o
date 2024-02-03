@@ -7,27 +7,12 @@ export default function Form() {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
-    const saltRounds = 10;
-    const hashPassword = async (password: string): Promise<string> => {
-      try {
-        const hashedPassword = await bcrypt.hash(password, saltRounds);
-        return hashedPassword;
-      } catch (error) {
-        throw error;
-      }
-    };
-
-    let hashedPassword: string = "";
-    const password = formData.get("password");
-    if (password && typeof password === "string") {
-      hashedPassword = await hashPassword(password);
-    }
-    const data = {
-      mail: formData.get("email"),
-      password: hashedPassword,
-    };
 
     try {
+      const data = {
+        mail: formData.get("email"),
+        password: formData.get("password"),
+      };
       console.log(process.env.NEXT_PUBLIC_API_URL);
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/api/user/connect`,
@@ -39,14 +24,15 @@ export default function Form() {
           body: JSON.stringify(data),
         }
       );
-
-      if (!response.ok) {
-        throw new Error("Problème lors de la connexion");
+      console.log(response);
+      if (response.ok) {
+        const responseData = await response.json();
+        console.log("Réponse de l'API", responseData);
+        Cookies.set("token", responseData.token);
+        router.push("../pages/homePage");
+      } else {
+        alert("Mot de passe incorect");
       }
-      const responseData = await response.json();
-      console.log("Réponse de l'API", responseData);
-      Cookies.set("token", responseData.token);
-      router.push("/");
     } catch (error) {
       console.error("Erreur lors de la connexion", error);
     }

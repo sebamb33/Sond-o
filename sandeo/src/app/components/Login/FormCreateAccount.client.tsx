@@ -10,21 +10,11 @@ export default function FormCreateAccount() {
     const formData = new FormData(e.target);
     const password = formData.get("password");
 
-    const hashPassword = async (password: any) => {
-      const saltRounds = 10;
-      return bcrypt.hash(password, saltRounds);
-    };
-
-    let hashedPassword = "";
-    if (password && typeof password === "string") {
-      hashedPassword = await hashPassword(password);
-    }
-
     const data = {
       firstname: formData.get("firstname"),
       lastname: formData.get("lastname"),
       email: formData.get("email"),
-      password: hashedPassword,
+      password: password,
     };
 
     try {
