@@ -101,7 +101,7 @@ userRouter.post("/create", async (req, res) => {
           id: userId,
         },
       });
-
+      console.log(insertedUser);
       //Retour de l'utilisateur
       res.status(201).json({ user: insertedUser, token });
     }

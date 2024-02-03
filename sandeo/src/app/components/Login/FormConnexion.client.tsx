@@ -2,6 +2,7 @@ import React from "react";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 export default function Form() {
+  Cookies.remove("token");
   const router = useRouter();
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

@@ -2,8 +2,13 @@
 "use client";
 import React from "react";
 import bcrypt from "bcryptjs";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
+import { cookies } from "next/headers";
 
 export default function FormCreateAccount() {
+  Cookies.remove("token");
+  const router = useRouter();
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
@@ -29,11 +34,13 @@ export default function FormCreateAccount() {
         }
       );
 
-      if (!response.ok) {
+      if (response.ok) {
+        const responseData = await response.json();
+        Cookies.set("token", responseData.token);
+        router.push("/homePage");
+      } else {
         throw new Error("Problème lors de la création du compte");
       }
-      const responseData = await response.json();
-      console.log("Réponse de l'API", responseData);
     } catch (error) {
       console.error("Erreur lors de la création du compte", error);
     }

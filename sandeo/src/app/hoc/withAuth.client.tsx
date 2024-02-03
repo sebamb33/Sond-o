@@ -9,9 +9,8 @@ const withAuth = (WrappedComponent: React.ComponentType<any>) => {
     useEffect(() => {
       const verifyToken = async () => {
         let token = Cookies.get("token");
-
         if (!token) {
-          router.push("/login");
+          router.push("/");
         } else {
           try {
             const data = { token: token };
