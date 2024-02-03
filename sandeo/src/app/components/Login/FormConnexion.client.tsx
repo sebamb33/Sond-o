@@ -13,7 +13,7 @@ export default function Form() {
         mail: formData.get("email"),
         password: formData.get("password"),
       };
-      console.log(process.env.NEXT_PUBLIC_API_URL);
+
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/api/user/connect`,
         {
@@ -24,12 +24,11 @@ export default function Form() {
           body: JSON.stringify(data),
         }
       );
-      console.log(response);
+
       if (response.ok) {
         const responseData = await response.json();
-        console.log("Réponse de l'API", responseData);
         Cookies.set("token", responseData.token);
-        router.push("/pages/homePage");
+        router.push("/homePage");
       } else {
         alert("Mot de passe incorect");
       }
