@@ -11,9 +11,22 @@ dotenv.config();
 const salt: number = 10;
 const userRouter = express.Router();
 const jwtSecret = process.env.JWT_SECRET;
+
 const hashPassword = async (password: any) => {
   return bcrypt.hash(password, salt);
 };
+
+function verifyToken(token) {
+  return new Promise((resolve, reject) => {
+    jwt.verify(token, jwtSecret, (err, decoded) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(decoded);
+      }
+    });
+  });
+}
 // Route pour récupérer les utilisateurs
 userRouter.post("/connect", async (req, res) => {
   try {
@@ -36,15 +49,14 @@ userRouter.post("/connect", async (req, res) => {
           res.json({ user, token });
         } else {
           res.status(401).json({
-            error: "Le mot de passe n'est pas correct",
+            error: "password not wrong",
           });
         }
       });
     }
   } catch (error) {
     res.status(500).json({
-      error:
-        "Une erreur s'est produite lors de la récupération des utilisateurs.",
+      error: "Error when user connect",
     });
   }
 });
@@ -69,9 +81,7 @@ userRouter.post("/create", async (req, res) => {
       },
     });
     if (existingUser) {
-      return res
-        .status(409)
-        .json({ error: "Un compte est déjà enregistré avec ce mail." });
+      return res.status(409).json({ error: "Account with this mail" });
     } else {
       const newUser = await AppDataSource.createQueryBuilder()
         .insert()
@@ -91,24 +101,32 @@ userRouter.post("/create", async (req, res) => {
           id: userId,
         },
       });
-
+      console.log(insertedUser);
       //Retour de l'utilisateur
       res.status(201).json({ user: insertedUser, token });
     }
   } catch (error) {
-    res
-      .status(500)
-      .json({ error: "Une erreur c'est produite durant la création" });
+    res.status(500).json({ error: "Error when make user" });
   }
 });
 
 //Route pour vérifier token
 userRouter.post("/verifyToken", async (req, res) => {
   try {
-    console.log(req.body);
+    if (req.body.token) {
+      const decodedToken = await verifyToken(req.body.token);
+      console.log("token decrypte : ", decodedToken);
+      if (decodedToken.hasOwnProperty("userID")) {
+        res.status(200).json({ message: "Token validate" });
+      }
+    } else {
+      res.status(401).json({
+        error: "Token invalid",
+      });
+    }
   } catch (Error) {
     res.status(500).json({
-      error: "Une erreur c'est produite durant la vérification du TOKEN",
+      error: "Problem when check token",
     });
   }
 });
