@@ -1,5 +1,4 @@
 import React from "react";
-import bcrypt from "bcryptjs";
 import router from "next/router";
 import Cookies from "js-cookie";
 export default function Form() {
