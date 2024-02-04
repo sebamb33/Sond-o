@@ -1,10 +1,8 @@
 // src/components/Login/FormCreateAccount.client.tsx
 "use client";
 import React from "react";
-import bcrypt from "bcryptjs";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
-import { cookies } from "next/headers";
 
 export default function FormCreateAccount() {
   Cookies.remove("token");
