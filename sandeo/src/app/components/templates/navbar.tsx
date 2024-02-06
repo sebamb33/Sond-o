@@ -1,17 +1,17 @@
 // components/templates/navbar.tsx
 import React, { ReactNode } from "react";
-
+import "@/app/globals.css";
 type navbar = {
   children: ReactNode;
 };
 
 const navbar = ({ children }: navbar) => (
-  <div>
-    <div className="navbar w-20">
+  <div className="flex h-full	">
+    <div className="navbar w-60	bg-red rounded-lg">
       <div className="menu"></div>
       <div className="userData">firstnam-lastname</div>
     </div>
-    <main>{children}</main>
+    <main className="w-9/12	">{children}</main>
   </div>
 );
 
