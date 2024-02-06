@@ -24,9 +24,16 @@ const withAuth = (WrappedComponent: React.ComponentType<any>) => {
                 body: JSON.stringify(data),
               }
             );
-
             if (response) {
               setIsLoading(false);
+              //set to local storage
+              const userData = await response.json();
+              if (userData.user) {
+                sessionStorage.setItem(
+                  "userData",
+                  JSON.stringify(userData.user)
+                );
+              }
             }
             if (!response.ok) throw new Error("Token verification failed");
 

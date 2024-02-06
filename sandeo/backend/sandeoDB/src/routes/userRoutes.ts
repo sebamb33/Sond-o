@@ -117,7 +117,22 @@ userRouter.post("/verifyToken", async (req, res) => {
       const decodedToken = await verifyToken(req.body.token);
       console.log("token decrypte : ", decodedToken);
       if (decodedToken.hasOwnProperty("userID")) {
-        res.status(200).json({ message: "Token validate" });
+        interface Token {
+          userID: number;
+        }
+        const userID: number = (decodedToken as Token).userID;
+
+        const user = await AppDataSource.getRepository("User").findOne({
+          where: {
+            id: userID,
+          },
+        });
+        if (user) {
+          //remove password
+          delete user.password;
+        }
+        console.log("User find", user);
+        res.status(200).json({ user });
       }
     } else {
       res.status(401).json({
