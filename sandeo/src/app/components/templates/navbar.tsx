@@ -1,18 +1,48 @@
-// components/templates/navbar.tsx
-import React, { ReactNode } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import "@/app/globals.css";
-type navbar = {
+
+type UserDataType = {
+  firstname: string;
+  lastname: string;
+};
+
+type NavbarProps = {
   children: ReactNode;
 };
 
-const navbar = ({ children }: navbar) => (
-  <div className="flex h-full	">
-    <div className="navbar w-60	bg-red rounded-lg">
-      <div className="menu"></div>
-      <div className="userData">firstnam-lastname</div>
-    </div>
-    <main className="w-9/12	">{children}</main>
-  </div>
-);
+const Navbar = ({ children }: NavbarProps) => {
+  const [userData, setUserData] = useState<UserDataType | null>(null);
 
-export default navbar;
+  useEffect(() => {
+    const userDataString = sessionStorage.getItem("userData");
+    if (userDataString) {
+      setUserData(JSON.parse(userDataString) as UserDataType);
+    }
+  }, []);
+
+  return (
+    <div className="flex h-full">
+      <div className="navbar w-60 bg-red rounded-lg">
+        <div className="menu"></div>
+        <div className="userData">
+          <div className="userPicture"></div>
+          <div className="userName">
+            {userData ? (
+              <p>
+                Bienvenue, {userData.firstname} {userData.lastname}
+              </p>
+            ) : (
+              <p>
+                Bienvenue, valeur par défaut pour prénom valeur par défaut pour
+                nom
+              </p>
+            )}
+          </div>
+        </div>
+      </div>
+      <main className="w-9/12">{children}</main>
+    </div>
+  );
+};
+
+export default Navbar;
