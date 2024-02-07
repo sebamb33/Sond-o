@@ -10,7 +10,6 @@ const Navbar = ({ children }: NavbarProps) => {
 
     useEffect(() => {
         const userDataString = sessionStorage.getItem("userData");
-        console.log(userDataString);
         if (userDataString) {
             setUserData(JSON.parse(userDataString));
         }
@@ -20,6 +19,7 @@ const Navbar = ({ children }: NavbarProps) => {
         <div className="flex h-full">
             <div className="navbar w-60 bg-red rounded-lg">
                 <div className="menu"></div>
+                <div className="userPicture"></div>
                 <div className="userData">{userData && <p>Bienvenue, {userData.firstname} - {userData.lastname}!</p>}</div>
             </div>
             <main className="w-9/12">{children}</main>
