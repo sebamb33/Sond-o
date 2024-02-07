@@ -32,10 +32,7 @@ const Navbar = ({ children }: NavbarProps) => {
                 Bienvenue, {userData.firstname} {userData.lastname}
               </p>
             ) : (
-              <p>
-                Bienvenue, valeur par défaut pour prénom valeur par défaut pour
-                nom
-              </p>
+              <p>Bienvenue</p>
             )}
           </div>
         </div>
