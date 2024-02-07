@@ -1,18 +1,30 @@
-// components/templates/navbar.tsx
-import React, { ReactNode } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import "@/app/globals.css";
-type navbar = {
-  children: ReactNode;
+
+type NavbarProps = {
+    children: ReactNode;
 };
 
-const navbar = ({ children }: navbar) => (
-  <div className="flex h-full	">
-    <div className="navbar w-60	bg-red rounded-lg">
-      <div className="menu"></div>
-      <div className="userData">firstnam-lastname</div>
-    </div>
-    <main className="w-9/12	">{children}</main>
-  </div>
-);
+const Navbar = ({ children }: NavbarProps) => {
+    const [userData, setUserData] = useState(null);
 
-export default navbar;
+    useEffect(() => {
+        const userDataString = sessionStorage.getItem("userData");
+        console.log(userDataString);
+        if (userDataString) {
+            setUserData(JSON.parse(userDataString));
+        }
+    }, []);
+
+    return (
+        <div className="flex h-full">
+            <div className="navbar w-60 bg-red rounded-lg">
+                <div className="menu"></div>
+                <div className="userData">{userData && <p>Bienvenue, {userData.firstname} - {userData.lastname}!</p>}</div>
+            </div>
+            <main className="w-9/12">{children}</main>
+        </div>
+    );
+};
+
+export default Navbar;
