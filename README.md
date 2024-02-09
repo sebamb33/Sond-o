@@ -37,6 +37,7 @@ Pour lancer le projet sur votre machine locale à des fins de développement et 
    ```
 
 3. Initialisé le back
+
    ```sh
    cd backend/sandeoDB/src
    mv exemple-data-source.ts data-source.ts #Change value for connect BD
@@ -44,7 +45,8 @@ Pour lancer le projet sur votre machine locale à des fins de développement et 
    npm start
    ```
 
-Executé les migrations:
-    ```sh
-    npx typeorm-ts-node-commonjs  migration:run -d src/data-source.ts
-    ```
+4. Executé les migrations:
+   allez dans sandeo/backend/sandeoDB/src puis éxécuter cette commande
+   ```sh
+   npx typeorm-ts-node-commonjs  migration:run -d src/data-source.ts
+   ```
