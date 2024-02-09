@@ -28,6 +28,7 @@ const withAuth = (WrappedComponent: React.ComponentType<any>) => {
               setIsLoading(false);
               //set to local storage
               const userData = await response.json();
+
               if (userData.user) {
                 sessionStorage.setItem(
                   "userData",
