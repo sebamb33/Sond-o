@@ -5,9 +5,9 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#1C698D',
-        secondary: '#0066CC',  // Bleu Secondaire
-        accent: '#4D90AD',
+        primary: "#2e4eda",
+        secondary: "#121fa2",
+        accent: "#ee4335",
         yellow: '#E8D862',
         lightgrey: '#CCCCCC',
       },
@@ -17,11 +17,11 @@ export default {
     themes: [
       {
         mytheme: {
-          "primary": "#1d4ed8",
-          "secondary": "#0ea5e9",
-          "accent": "#10b981",
-          "neutral": "#ffffff",
-          "base-100": "#ffffff",
+          "primary": "#2e4eda",
+          "secondary": "#121fa2",
+          "accent": "#ee4335",
+          "neutral": "#99e8ef",
+          "base-100": "#fcffff",
           "info": "#ffffff",
           "success": "#84cc16",
           "warning": "#ffffff",

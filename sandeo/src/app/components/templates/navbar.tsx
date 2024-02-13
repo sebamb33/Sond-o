@@ -28,6 +28,7 @@ const Navbar = ({ children }: NavbarProps) => {
   const avatarDataUrl = `data:image/svg+xml;base64,${btoa(avatar.toString())}`;
 
   return (
+      <div className="body__app">
 
 
       <div className="navbar bg-base-100">
@@ -51,15 +52,18 @@ const Navbar = ({ children }: NavbarProps) => {
             <ul tabIndex="0" className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
               <li>
                 <a className="justify-between">
-                  Profile
+                  Mon profil ({userData?.mail})
                 </a>
               </li>
-              <li><a>Settings</a></li>
-              <li><a>Logout</a></li>
+              <li><a>Parametres</a></li>
+              <li><a>Déconnecter</a></li>
             </ul>
           </div>
         </div>
       </div>
+        {children}
+      </div>
+
   );
 };
 
