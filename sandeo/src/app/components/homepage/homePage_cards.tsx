@@ -1,4 +1,8 @@
+import { useRouter } from 'next/router';
+
 export default function Card() {
+    const router = useRouter();
+
   return (
       <div className="card h-full grid gap-y-8 xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1">
           <div className="card w-96 bg-primary text-primary-content min-h-72 md:w-full lg:w-96">
@@ -6,7 +10,7 @@ export default function Card() {
                   <h2 className="card-title">Sondage </h2>
                   <p>Via cette espace vous pouvez crée un sondage</p>
                   <div className="card-actions justify-end">
-                      <button className="btn">Crée un sondage</button>
+                      <button className="btn" onClick={() => router.push('/formularyManage')}>Crée un sondage</button>
                   </div>
               </div>
           </div>

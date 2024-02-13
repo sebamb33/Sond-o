@@ -1,7 +1,7 @@
 import React from "react";
 import withAuth from "../app/hoc/withAuth.client";
 import Navbar from "../app/components/templates/navbar";
-import Card from "@/app/components/homepage/homePage_card.client";
+import Card from "@/app/components/homepage/homePage_cards";
 const HomePage = () => {
   return (
     <Navbar>
