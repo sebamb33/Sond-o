@@ -1,6 +1,6 @@
 import React, { ReactNode, useEffect, useState } from "react";
 import { createAvatar } from "@dicebear/core";
-import { notionistsNeutral } from "@dicebear/collection";
+import { botttsNeutral } from '@dicebear/collection';
 import "@/app/globals.css";
 
 type UserDataType = {
@@ -22,33 +22,48 @@ const Navbar = ({ children }: NavbarProps) => {
       setUserData(JSON.parse(userDataString) as UserDataType);
     }
   }, []);
-  const avatar = createAvatar(notionistsNeutral, {
+  const avatar = createAvatar(botttsNeutral, {
     seed: userData?.mail,
   });
+  const avatarDataUrl = `data:image/svg+xml;base64,${btoa(avatar.toString())}`;
+
   return (
-    <div className="flex h-full">
-      <div className="navbar w-60 bg-red rounded-lg">
-        <div className="menu"></div>
-        <div className="userData">
-          <div className="userPicture">
-            <div
-              dangerouslySetInnerHTML={{ __html: avatar.toString() }}
-              className="avatar"
-            ></div>
-          </div>
-          <div className="userName">
-            {userData ? (
-              <p>
-                Bienvenue, {userData.firstname} {userData.lastname}
-              </p>
-            ) : (
-              <p>Bienvenue</p>
-            )}
+      <div className="body__app">
+
+
+      <div className="navbar bg-base-100">
+        <div className="flex-1">
+          <a className="btn btn-ghost text-xl">Sondéo</a>
+        </div>
+        <div className="flex-none gap-2">
+            <ul className="menu menu-horizontal px-1">
+              <li><a>Sondages</a></li>
+              <li>
+               <a>Statistiques</a>
+              </li>
+            </ul>
+          <div className="dropdown dropdown-end">
+
+            <div tabIndex="0" role="button" className="btn btn-ghost btn-circle avatar">
+              <div className="w-10 rounded-full">
+                <img alt="User Avatar" src={avatarDataUrl}/>
+              </div>
+            </div>
+            <ul tabIndex="0" className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+              <li>
+                <a className="justify-between">
+                  Mon profil ({userData?.mail})
+                </a>
+              </li>
+              <li><a>Parametres</a></li>
+              <li><a>Déconnecter</a></li>
+            </ul>
           </div>
         </div>
       </div>
-      <main className="w-9/12">{children}</main>
-    </div>
+        {children}
+      </div>
+
   );
 };
 
