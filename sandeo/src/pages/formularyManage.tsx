@@ -1,7 +1,7 @@
 import React from "react";
 import withAuth from "../app/hoc/withAuth.client";
 import Navbar from "../app/components/templates/navbar";
-import FormularyManageForm from "@/app/components/formularyManage/formularyManageForm";
+import FormularyManageFormClient from "@/app/components/formularyManage/formularyManageForm.client";
 import FormularyManageStat from "@/app/components/formularyManage/formularyManageStat";
 
 const formularyManage = () => {
@@ -9,7 +9,7 @@ const formularyManage = () => {
     <div>
         <Navbar>
             <div className="formularyManage p-16 w-full">
-                    <FormularyManageForm />
+                    <FormularyManageFormClient />
                     <FormularyManageStat />
             </div>
         </Navbar>
