@@ -2,6 +2,7 @@ import React, { ReactNode, useEffect, useState } from "react";
 import { createAvatar } from "@dicebear/core";
 import { botttsNeutral } from '@dicebear/collection';
 import "@/app/globals.css";
+import router from "next/router";
 
 type UserDataType = {
   firstname: string;
@@ -33,7 +34,7 @@ const Navbar = ({ children }: NavbarProps) => {
 
       <div className="navbar bg-base-100">
         <div className="flex-1">
-          <a className="btn btn-ghost text-xl">Sondéo</a>
+          <a className="btn btn-ghost text-xl" onClick={() => router.push('/homePage')}>Sondéo</a>
         </div>
         <div className="flex-none gap-2">
             <ul className="menu menu-horizontal px-1">
