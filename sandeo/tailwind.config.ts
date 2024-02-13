@@ -11,6 +11,9 @@ export default {
         yellow: '#E8D862',
         lightgrey: '#CCCCCC',
       },
+      backgroundImage: {
+        'custom-gradient': 'linear-gradient(41deg, #2e4eda 39%, #121fa2 100%)',
+      },
     },
   },
   daisyui: {
