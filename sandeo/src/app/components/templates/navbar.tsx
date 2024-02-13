@@ -3,6 +3,7 @@ import { createAvatar } from "@dicebear/core";
 import { botttsNeutral } from '@dicebear/collection';
 import "@/app/globals.css";
 import router from "next/router";
+import Cookies from "js-cookie";
 
 type UserDataType = {
   firstname: string;
@@ -26,15 +27,20 @@ const Navbar = ({ children }: NavbarProps) => {
   const avatar = createAvatar(botttsNeutral, {
     seed: userData?.mail,
   });
+  const disconnect = () => {
+    sessionStorage.removeItem("userData");
+    Cookies.remove("token");
+    router.push("/");
+  }
   const avatarDataUrl = `data:image/svg+xml;base64,${btoa(avatar.toString())}`;
 
   return (
       <div className="body__app">
 
 
-      <div className="navbar bg-base-100">
+      <div className="navbar bg-base-100 ">
         <div className="flex-1">
-          <a className="btn btn-ghost text-xl" onClick={() => router.push('/homePage')}>Sondéo</a>
+          <a className="btn btn-ghost text-3xl text-primary" onClick={() => router.push('/homePage')}>Sondéo</a>
         </div>
         <div className="flex-none gap-2">
             <ul className="menu menu-horizontal px-1">
@@ -57,7 +63,7 @@ const Navbar = ({ children }: NavbarProps) => {
                 </a>
               </li>
               <li><a>Parametres</a></li>
-              <li><a>Déconnecter</a></li>
+              <li><a onClick={disconnect }>Déconnecter</a></li>
             </ul>
           </div>
         </div>

@@ -34,6 +34,9 @@ const withAuth = (WrappedComponent: React.ComponentType<any>) => {
                   "userData",
                   JSON.stringify(userData.user)
                 );
+                if(sessionStorage.getItem("userData") === null){
+                  router.push("/login");
+                }
               }
             }
             if (!response.ok) throw new Error("Token verification failed");
@@ -50,7 +53,7 @@ const withAuth = (WrappedComponent: React.ComponentType<any>) => {
     }, []);
 
     if (isLoading) {
-      return <div>Chargement...</div>;
+      return <span className="loading loading-spinner text-primary w-full h-full m-auto"></span>;
     }
 
     return <WrappedComponent {...props} />;
