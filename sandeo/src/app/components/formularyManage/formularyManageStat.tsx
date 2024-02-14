@@ -1,6 +1,6 @@
 export default function FormularyManageStat() {
     return(
-        <div className="FormularyManageStat w-11/12 absolute bottom-0 h-96">
+        <div className="FormularyManageStat w-11/12 absolute bottom-0 p-5">
             <h1 className="text-primary text-6xl">Vos statistiques : </h1>
             <div className="statistic flex justify-around pt-10 flex-wrap">
                 <div className="statistic-card w-72">

@@ -89,7 +89,7 @@ export default function FormularyManageFormClient() {
     );
 } else{
     return (
-        <span className="loading loading-spinner text-primary  w-1/6"></span>
+        <span className="loading loading-spinner text-primary "></span>
     );
     }
 }
