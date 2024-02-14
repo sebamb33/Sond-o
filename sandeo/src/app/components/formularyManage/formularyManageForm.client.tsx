@@ -38,6 +38,7 @@ export default function FormularyManageFormClient() {
             if(response.ok){
                 const responseData = await response.json();
                 console.log(responseData);
+
                 }else{
                 throw new Error("Problème réponse serveur ");
             }
