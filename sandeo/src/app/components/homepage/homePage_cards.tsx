@@ -10,7 +10,7 @@ export default function Card() {
                   <h2 className="card-title">Sondage </h2>
                   <p>Via cette espace vous pouvez crée un sondage</p>
                   <div className="card-actions justify-end">
-                      <button className="btn" onClick={() => router.push('/formularyManage')}>Crée un sondage</button>
+                      <button className="btn" onClick={() => router.push('/formulary')}>Crée un sondage</button>
                   </div>
               </div>
           </div>
