@@ -51,7 +51,7 @@ export default function FormularyManageFormClient() {
     };
     if(!isLoading){
     return (
-        <form className="formularyManage flex flex-col w-80 m-auto border border-secondary rounded-lg p-3 bg-primary" onSubmit={handleSubmit}>
+        <form className="formulary flex flex-col w-80 m-auto border border-secondary rounded-lg p-3 bg-primary" onSubmit={handleSubmit}>
             <div className="w-full">
                 <input
                     type="text"

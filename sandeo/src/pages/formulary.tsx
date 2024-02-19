@@ -4,7 +4,7 @@ import Navbar from "../app/components/templates/navbar";
 import FormularyManageFormClient from "@/app/components/formularyManage/formularyManageForm.client";
 import FormularyManageStat from "@/app/components/formularyManage/formularyManageStat";
 
-const formularyManage = () => {
+const formulary = () => {
   return (
     <div>
         <Navbar>
@@ -16,4 +16,4 @@ const formularyManage = () => {
     </div>
   );
 }
-export default withAuth(formularyManage);
+export default withAuth(formulary);
