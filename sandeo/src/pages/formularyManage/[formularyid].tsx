@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import withAuth from "@/app/hoc/withAuth.client";
-import { useRouter } from "next/router";
+import {useRouter} from "next/router";
 import Cookies from "js-cookie";
+import ManageQuestions from "@/app/components/questions/manageQuestions";
 
 const FormularyManage = () => {
   const [isAuthorized, setIsAuthorized] = useState(false);
@@ -54,8 +55,7 @@ const FormularyManage = () => {
   if (isAuthorized) {
     return (
       <div>
-        <h1>FormularyManage</h1>
-        <p>{formularyid}</p>
+        <ManageQuestions formularyID={formularyid}/>
       </div>
     );
   } else {
