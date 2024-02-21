@@ -1,23 +1,11 @@
 import express from "express";
 import {AppDataSource} from "../data-source";
-import jwt from "jsonwebtoken";
 import {Question} from "../entity/Question";
 
 
 const questionRouter = express.Router();
 const jwtSecret = process.env.JWT_SECRET;
 
-function verifyToken(token) {
-    return new Promise((resolve, reject) => {
-        jwt.verify(token, jwtSecret, (err, decoded) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(decoded);
-            }
-        });
-    });
-}
 
 questionRouter.post("/create", async (req, res) => {
     console.log(req.body);
