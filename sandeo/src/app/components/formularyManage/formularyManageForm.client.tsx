@@ -1,8 +1,9 @@
 "use client";
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import Cookies from "js-cookie";
 import router from "next/router";
 import ErrorAlert from "../alert/errorAlert";
+
 export default function FormularyManageFormClient() {
     const [name, setName] = useState('');
     const [isPrivate, setIsPrivate] = useState(false);
@@ -38,7 +39,7 @@ export default function FormularyManageFormClient() {
             if(response.ok){
                 const responseData = await response.json();
                 console.log(responseData);
-                router.push(`/questionsManage/${responseData.formulary.id}`);
+                router.push(`/formularyManage/${responseData.formulary.id}`);
                 }else{
                 throw new Error("Problème réponse serveur ");
             }
