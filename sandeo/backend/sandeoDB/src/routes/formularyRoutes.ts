@@ -1,7 +1,7 @@
 import express from "express";
-import { AppDataSource } from "../data-source";
+import {AppDataSource} from "../data-source";
 import jwt from "jsonwebtoken";
-import { Formulary } from "../entity/Formulary";
+import {Formulary} from "../entity/Formulary";
 
 const formularyRouter = express.Router();
 const jwtSecret = process.env.JWT_SECRET;
@@ -104,5 +104,70 @@ formularyRouter.post("/checkIfAuthorized", async (req, res) => {
     });
   }
 });
+formularyRouter.get("/getFormulary", async (req, res) => {
+    try {
+        const formularyID = req.query.formularyID;
+
+        if (typeof formularyID !== 'string') {
+            return res.status(400).json({error: "Invalid formularyID provided"});
+        }
+
+        const formularyIdNumber = parseInt(formularyID, 10);
+        if (isNaN(formularyIdNumber)) {
+            return res.status(400).json({error: "formularyID must be a number"});
+        }
+
+        const formularyDB = await AppDataSource.getRepository(Formulary).findOne({
+            where: {
+                id: formularyIdNumber
+            }
+        });
+
+        if (formularyDB) {
+            console.log("Formulary found", formularyDB);
+            res.status(200).json({formulary: formularyDB});
+        } else {
+            res.status(404).json({error: "Formulary not found"});
+        }
+
+    } catch (error) {
+        console.error("Error when getting formulary", error);
+        res.status(500).json({
+            error: "Error when getting formulary",
+            message: error.message
+        });
+    }
+});
+formularyRouter.put("/update", async (req, res) => {
+    try {
+        console.log('Données reçu', req.body);
+        const {formularyID, title, isNoted, isPrivate} = req.body as {
+            formularyID: number;
+            title: string;
+            isNoted: boolean;
+            isPrivate: boolean;
+        };
+
+        const formularyDB = await AppDataSource.getRepository(Formulary).findOne({
+            where: {
+                id: formularyID
+            }
+        });
+        if (formularyDB) {
+            console.log("Formulary found", formularyDB);
+            formularyDB.name = title;
+            formularyDB.isNoted = isNoted;
+            formularyDB.isPrivate = isPrivate;
+            await AppDataSource.getRepository(Formulary).save(formularyDB);
+            res.status(200).json({formulary: formularyDB});
+        }
+    } catch (error) {
+        res.status(500).json({
+            error: "Error when formulary update",
+        });
+    }
+});
+
+
 
 export default formularyRouter;

@@ -1,6 +1,6 @@
-import React, { ReactNode, useEffect, useState } from "react";
-import { createAvatar } from "@dicebear/core";
-import { botttsNeutral } from "@dicebear/collection";
+import React, {ReactNode, useEffect, useState} from "react";
+import {createAvatar} from "@dicebear/core";
+import {botttsNeutral} from "@dicebear/collection";
 import "@/app/globals.css";
 import router from "next/router";
 import Cookies from "js-cookie";
@@ -32,7 +32,7 @@ const Navbar = ({ children }: NavbarProps) => {
     Cookies.remove("token");
     router.push("/");
   };
-  const avatarDataUrl = `data:image/svg+xml;base64,${btoa(avatar.wtoString())}`;
+  const avatarDataUrl = `data:image/svg+xml;base64,${btoa(avatar.toString())}`;
 
   return (
     <div className="body__app">
