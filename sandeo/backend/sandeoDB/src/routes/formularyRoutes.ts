@@ -140,6 +140,7 @@ formularyRouter.get("/getFormulary", async (req, res) => {
 });
 formularyRouter.put("/update", async (req, res) => {
     try {
+        console.log('Données reçu', req.body);
         const {formularyID, title, isNoted, isPrivate} = req.body as {
             formularyID: number;
             title: string;
@@ -153,6 +154,7 @@ formularyRouter.put("/update", async (req, res) => {
             }
         });
         if (formularyDB) {
+            console.log("Formulary found", formularyDB);
             formularyDB.name = title;
             formularyDB.isNoted = isNoted;
             formularyDB.isPrivate = isPrivate;
