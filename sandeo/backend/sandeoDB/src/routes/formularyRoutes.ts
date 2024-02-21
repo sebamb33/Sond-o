@@ -1,7 +1,7 @@
 import express from "express";
-import { AppDataSource } from "../data-source";
+import {AppDataSource} from "../data-source";
 import jwt from "jsonwebtoken";
-import { Formulary } from "../entity/Formulary";
+import {Formulary} from "../entity/Formulary";
 
 const formularyRouter = express.Router();
 const jwtSecret = process.env.JWT_SECRET;
@@ -103,6 +103,30 @@ formularyRouter.post("/checkIfAuthorized", async (req, res) => {
       error: "Error when permissions is checked",
     });
   }
+});
+formularyRouter.get("/getFormulary", async (req, res) => {
+    try {
+        const {formularyID} = req.body as {
+            formularyID: number
+        }
+
+        const formularyDB = await AppDataSource.getRepository(Formulary).findOne({
+            where: {
+                id: formularyID
+            }
+        });
+        if (formularyDB) {
+            console.log("Formulary found", formularyDB);
+            res.status(200).json({formulary: formularyDB});
+        } else {
+            res.status(404).json({error: "Formulary not found"});
+        }
+
+    } catch (error) {
+        res.status(500).json({
+            error: "Error when get formulary",
+        });
+    }
 });
 
 export default formularyRouter;

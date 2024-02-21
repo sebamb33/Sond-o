@@ -4,7 +4,6 @@ import {Question} from "../entity/Question";
 
 
 const questionRouter = express.Router();
-const jwtSecret = process.env.JWT_SECRET;
 
 
 questionRouter.post("/create", async (req, res) => {

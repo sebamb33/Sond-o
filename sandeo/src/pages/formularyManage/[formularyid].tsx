@@ -3,6 +3,7 @@ import withAuth from "@/app/hoc/withAuth.client";
 import {useRouter} from "next/router";
 import Cookies from "js-cookie";
 import ManageQuestions from "@/app/components/questions/manageQuestions";
+import Navbar from "@/app/components/templates/navbar";
 
 const FormularyManage = () => {
   const [isAuthorized, setIsAuthorized] = useState(false);
@@ -54,9 +55,11 @@ const FormularyManage = () => {
 
   if (isAuthorized) {
     return (
+        <Navbar>
       <div>
         <ManageQuestions formularyID={formularyid}/>
       </div>
+        </Navbar>
     );
   } else {
     return (
