@@ -19,6 +19,16 @@ questionRouter.post("/create", async (req, res) => {
         newQuestion.formularyId = formularyID as number;
         newQuestion.questionText = question;
         newQuestion.status = manyChoice;
+        //Get the number of questions in the formulary for order
+        AppDataSource.getRepository(Question)
+            .count({
+                where: {
+                    formularyId: formularyID
+                }
+            })
+            .then((count) => {
+                newQuestion.order = count + 1;
+            })
         AppDataSource.getRepository(Question)
             .save(newQuestion)
             .then((savedQuestion) => {
