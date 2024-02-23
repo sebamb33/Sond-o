@@ -42,22 +42,27 @@ export default function ManageChoice(props: ManageChoiceProps) {
     if (questions.length > 0) {
         return (
             <div>
+                <h2>Questions</h2>
+                <div>
 
-                <div>
-                    <h2>Questions</h2>
-                    <ul>
-                        {questions.map((question) => {
-                            return <li key={question.id}>{question.questionText}</li>;
-                        })}
-                    </ul>
-                </div>
-                <div>
-                    <h2>Choix</h2>
-                    <ul>
-                        {choices.map((choice) => {
-                            return <li key={choice.id}>{choice.choiceText}</li>;
-                        })}
-                    </ul>
+                    {questions.map((question) => {
+                        return (
+                            <div key={question.id}>
+                                <h3>{question.questionText}</h3>
+                                <div>
+                                    {choices.map((choice) => {
+                                        if (choice.questionID === question.id) {
+                                            return (
+                                                <div key={choice.id}>
+                                                    <p>{choice.choiceText}</p>
+                                                </div>
+                                            );
+                                        }
+                                    })}
+                                </div>
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
         );
