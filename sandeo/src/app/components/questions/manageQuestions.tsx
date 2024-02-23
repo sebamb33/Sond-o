@@ -92,8 +92,8 @@ export default function ManageQuestions(props: ManageQuestionsProps) {
         .formularyID]);
 
   return (
-      <div className="makeQuestionFormulary flex w-full justify-center pt-5 gap-6">
-
+      <div className="ManageQuestion flex-col w-full">
+          <div className="makeQuestionFormulary flex w-full justify-center pt-5 gap-6">
           <div className="formularyParams w-1/4 bg-primary p-6 rounded-xl ">
               <h2 className="text-white text-2xl">Paramètres du formulaire :</h2>
               <form action="" onSubmit={handleFormularySubmit}>
@@ -129,7 +129,10 @@ export default function ManageQuestions(props: ManageQuestionsProps) {
               </label>
               <button className="btn btn-primary">Ajouter</button>
           </form>
-          <ManageChoice formularyID={props.formularyID}/>
+          </div>
+          <div className="w-full">
+              <ManageChoice formularyID={props.formularyID}/>
+          </div>
       </div>
   );
 }

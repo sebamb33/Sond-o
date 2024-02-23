@@ -44,7 +44,7 @@ choiceRouter.post("/getAll", async (req, res) => {
         for (let question of questions) {
             choices = await AppDataSource.getRepository(Choice).find({where: {questionId: question.id}});
         }
-        console.log(questions, choices);
+        console.log('Les choix : ', choices);
         res.status(200).json({questions: questions, choices: choices});
     } catch (error) {
         res.status(500).json({
