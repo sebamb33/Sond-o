@@ -1,5 +1,6 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import IFormulary from "@/app/interfaces/IFormulary";
+import ManageChoice from "@/app/components/manageChoice";
 
 interface ManageQuestionsProps {
     formularyID: number;
@@ -78,8 +79,9 @@ export default function ManageQuestions(props: ManageQuestionsProps) {
 
             if (response.ok) {
                 const responseData = await response.json();
+
                 setFormulary(responseData.formulary as IFormulary);
-                console.log(formulary)
+
 
             }
         }
@@ -127,6 +129,7 @@ export default function ManageQuestions(props: ManageQuestionsProps) {
               </label>
               <button className="btn btn-primary">Ajouter</button>
           </form>
+          <ManageChoice formularyID={props.formularyID}/>
       </div>
   );
 }
