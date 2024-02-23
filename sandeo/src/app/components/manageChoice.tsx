@@ -1,4 +1,5 @@
 import {useState} from "react";
+import iChoice from "@/app/interfaces/IChoice";
 
 interface ManageChoiceProps {
     formularyID: number;
@@ -29,6 +30,37 @@ export default function ManageChoice(props: ManageChoiceProps) {
             }
         };
         fetchChoices();
+    }
+    console.log(choices);
+    if (choices.length > 0) {
+        return (
+            <div className="AllQuestionsAndChoice">
+                <form>
+                    <div>
+                        <label>Choix</label>
+                        <input type="text" name="choice"/>
+                    </div>
+                    <div>
+                        <label>Bonne réponse</label>
+                        <input type="checkbox" name="goodResponse"/>
+                    </div>
+                    <button type="submit">Ajouter</button>
+                </form>
+                <ul>
+                    {choices.map((choice: iChoice) => {
+                        return (
+                            <li key={choice.id}>
+                                {choice.choiceText}
+                                <button>Modifier</button>
+                                <button>Supprimer</button>
+                            </li>
+                        );
+                    })}
+                </ul>
+            </div>
+        );
+    } else {
+        return (<div><p className="w-full ">Aucune question{choices}</p></div>)
     }
 
 }

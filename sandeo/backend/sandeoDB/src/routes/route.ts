@@ -9,4 +9,5 @@ const router = express.Router();
 router.use("/user", userRouter);
 router.use("/formulary", formularyRouter);
 router.use("/question", questionRouter);
+router.use("/choice", questionRouter);
 export default router;

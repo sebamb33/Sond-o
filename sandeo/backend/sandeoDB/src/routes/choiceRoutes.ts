@@ -40,10 +40,12 @@ choiceRouter.post("/getAll", async (req, res) => {
         });
 
         //Pick all choices for each question
+        let choices: Choice[] = [];
         for (let question of questions) {
-            question.choices = await AppDataSource.getRepository(Choice).find({where: {questionId: question.id}});
+            choices = await AppDataSource.getRepository(Choice).find({where: {questionId: question.id}});
         }
-        res.status(200).json({questions: questions});
+        console.log(questions, choices);
+        res.status(200).json({questions: questions, choices: choices});
     } catch (error) {
         res.status(500).json({
             error: "An error occurred while fetching the choices.",
