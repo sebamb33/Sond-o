@@ -61,7 +61,6 @@ export default function ManageQuestions(props: ManageChoiceProps) {
                                     <MdDeleteOutline className="text-white h-5 w-5"/>
                                     <FaEdit className="text-white h-5 w-5"/>
                                 </div>
-                                <p>Ici y'aura les choix</p>
                                 <EditChoice questionId={question.id}/>
                             </div>
                         );
