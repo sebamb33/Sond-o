@@ -1,4 +1,4 @@
-import type { Config } from 'tailwindcss'
+import type {Config} from 'tailwindcss'
 
 export default {
   content: ['auto'],
@@ -33,6 +33,6 @@ export default {
       },
     ],
   },
-  plugins: [require("daisyui")],
+    plugins: [require("daisyui"), require('tailwind-scrollbar')],
 } satisfies Config
 
