@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react";
 import IFormulary from "@/app/interfaces/IFormulary";
-import ManageChoice from "@/app/components/manageChoice";
+import ManageQuestions from "@/app/components/manageQuestions";
 
 interface ManageQuestionsProps {
     formularyID: number;
 }
 
-export default function ManageQuestions(props: ManageQuestionsProps) {
+export default function ManageFormularyAndQuestions(props: ManageQuestionsProps) {
 
     const [formulary, setFormulary] = useState<IFormulary>();
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -131,7 +131,7 @@ export default function ManageQuestions(props: ManageQuestionsProps) {
           </form>
           </div>
           <div className="w-full">
-              <ManageChoice formularyID={props.formularyID}/>
+              <ManageQuestions formularyID={props.formularyID}/>
           </div>
       </div>
   );

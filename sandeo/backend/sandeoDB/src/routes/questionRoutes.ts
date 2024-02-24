@@ -42,4 +42,23 @@ questionRouter.post("/create", async (req, res) => {
 
 });
 
+questionRouter.post("/getAll", async (req, res) => {
+    const {formularyID} = req.body as { formularyID: number };
+    if (formularyID) {
+        AppDataSource.getRepository(Question)
+            .find({
+                where: {
+                    formularyId: formularyID
+                }
+            })
+            .then((questions) => {
+                res.status(200).json({questions: questions});
+            })
+            .catch((error) => {
+                console.error("Error getting questions", error);
+                res.status(500).json({error: "An error occurred while getting the questions."});
+            });
+    }
+});
+
 export default questionRouter;
