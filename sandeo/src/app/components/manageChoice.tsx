@@ -1,6 +1,9 @@
 import {useEffect, useState} from "react";
 import iChoice from "@/app/interfaces/IChoice";
 import iQuestion from "@/app/interfaces/IQuestion";
+import {MdDeleteOutline} from "react-icons/md";
+import {FaEdit} from "react-icons/fa";
+
 
 interface ManageChoiceProps {
     formularyID: number;
@@ -41,24 +44,23 @@ export default function ManageChoice(props: ManageChoiceProps) {
     console.log(questions)
     if (questions.length > 0) {
         return (
-            <div>
-                <h2>Questions</h2>
-                <div>
+            <div className=" w-4/5 mt-10  m-auto flex-col">
+                <h2 className="text-center text-5xl text-primary pb-20">Questions :</h2>
+                <div className="flex-col gap-3">
 
                     {questions.map((question) => {
                         return (
-                            <div key={question.id}>
-                                <h3>{question.questionText}</h3>
+                            <div className="flex-col border border-primary rounded-xl" key={question.id}>
+                                <div className="nameOfQuestion flex bg-secondary p-5 gap-5">
+                                    <h3 className="w-full bg-secondary text-3xl text-white text-center">{question.questionText}</h3>
+                                    <MdDeleteOutline className="text-white h-7 w-7"/>
+                                    <FaEdit className="text-white h-7 w-7"/>
+                                </div>
+                                <p>Ici y'aura les choix </p>
+
                                 <div>
-                                    {choices.map((choice) => {
-                                        if (choice.questionID === question.id) {
-                                            return (
-                                                <div key={choice.id}>
-                                                    <p>{choice.choiceText}</p>
-                                                </div>
-                                            );
-                                        }
-                                    })}
+
+
                                 </div>
                             </div>
                         );
