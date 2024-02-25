@@ -1,6 +1,5 @@
 import express from "express";
 import {AppDataSource} from "../data-source";
-import {Question} from "../entity/Question";
 import {Choice} from "../entity/Choice";
 
 const choiceRouter = express.Router();
@@ -31,21 +30,15 @@ choiceRouter.post("/create", async (req, res) => {
 
 choiceRouter.post("/getAll", async (req, res) => {
     try {
-        const {formularyID} = req.body as {
-            formularyID: number;
+        const {questionID} = req.body as {
+            questionID: number;
         };
-        const questions = await AppDataSource.getRepository(Question).find({
-            where: {formularyId: formularyID},
-            order: {order: "ASC"}
+        const choices = await AppDataSource.getRepository(Choice).find({
+            where: {questionId: questionID},
         });
 
-        //Pick all choices for each question
-        let choices: Choice[] = [];
-        for (let question of questions) {
-            choices = await AppDataSource.getRepository(Choice).find({where: {questionId: question.id}});
-        }
         console.log('Les choix : ', choices);
-        res.status(200).json({questions: questions, choices: choices});
+        res.status(200).json({choices: choices});
     } catch (error) {
         res.status(500).json({
             error: "An error occurred while fetching the choices.",
