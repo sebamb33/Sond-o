@@ -5,22 +5,22 @@ import {Choice} from "../entity/Choice";
 const choiceRouter = express.Router();
 choiceRouter.post("/create", async (req, res) => {
     try {
-        const {choice, questionID} = req.body as {
+        const {choice, questionID, goodResponse} = req.body as {
             choice: string;
+            goodResponse: boolean;
             questionID: number;
         };
-        AppDataSource.getRepository(choice)
-            .save({choice: choice, questionID: questionID})
-            .then((savedChoice) => {
-                console.log("Choice saved", savedChoice);
-                res.status(200).json({choice: savedChoice});
-            })
-            .catch((error) => {
-                console.error("Error saving choice", error);
-                res
-                    .status(500)
-                    .json({error: "An error occurred while saving the choice."});
-            });
+        console.log('Les choix : ', req.body);
+        const choiceRepository = AppDataSource.getRepository(Choice);
+
+        const newChoice = new Choice();
+        newChoice.choiceText = choice;
+        newChoice.questionId = questionID;
+        newChoice.goodResponse = goodResponse;
+
+        const savedChoice = await choiceRepository.save(newChoice);
+        console.log('choix sauvegardé : ', savedChoice);
+        res.status(200).json({choice: savedChoice});
     } catch (error) {
         res.status(500).json({
             error: "An error occurred while saving the choice.",
