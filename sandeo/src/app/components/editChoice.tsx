@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {iChoice} from "@/app/interfaces/iChoice";
 import {FaSave} from "react-icons/fa";
 import {MdDelete} from "react-icons/md";
-import {toast} from 'react-hot-toast';
+import toast, {Toaster} from 'react-hot-toast';
 
 
 interface EditQuestionsProps {
@@ -57,6 +57,8 @@ export default function EditChoice({questionId}: EditQuestionsProps) {
         })
             .then((response) => response.json())
             .then((data) => {
+                toast("oco")
+                getChoice()
                 console.log("Success:", data);
             })
             .catch((error) => {
@@ -78,7 +80,6 @@ export default function EditChoice({questionId}: EditQuestionsProps) {
             if (response.ok) {
                 const responseData = await response.json();
                 setChoices(responseData.choices);
-                getChoice();
 
             }
         } catch (error) {
@@ -90,12 +91,8 @@ export default function EditChoice({questionId}: EditQuestionsProps) {
     }, [questionId]);
     return (
         <div>
+            <Toaster/>
             <h1 className="text-3xl pl-3 pt-3 text-primary">Choix :</h1>
-            <div className="toast">
-                <div className="alert alert-info">
-                    <span>New message arrived.</span>
-                </div>
-            </div>
             {choices?.length > 0 ? <div>
                     {choices?.map((choice) => {
                         return (
