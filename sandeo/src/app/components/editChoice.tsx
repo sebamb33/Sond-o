@@ -32,34 +32,33 @@ export default function EditChoice({questionId}: EditQuestionsProps) {
                 const responseData: iChoice = await response.json();
                 console.log(responseData);
                 setChoices((prevChoices) => [...prevChoices, responseData]);
+                getChoice();
             }
         } catch (error) {
             console.error("Error creating choice", error);
         }
     };
-
-    useEffect(() => {
-        const getChoice = async () => {
-            try {
-                const response = await fetch(
-                    `${process.env.NEXT_PUBLIC_API_URL}/api/choice/getAll`,
-                    {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({questionID: questionId}),
-                    }
-                );
-                if (response.ok) {
-                    const responseData = await response.json();
-                    setChoices(responseData.choices);
+    const getChoice = async () => {
+        try {
+            const response = await fetch(
+                `${process.env.NEXT_PUBLIC_API_URL}/api/choice/getAll`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({questionID: questionId}),
                 }
-            } catch (error) {
-                console.error("Error getting choices", error);
+            );
+            if (response.ok) {
+                const responseData = await response.json();
+                setChoices(responseData.choices);
             }
-        };
-
+        } catch (error) {
+            console.error("Error getting choices", error);
+        }
+    };
+    useEffect(() => {
         getChoice();
     }, [questionId]);
     return (
