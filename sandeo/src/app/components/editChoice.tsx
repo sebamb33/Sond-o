@@ -2,6 +2,8 @@ import React, {useEffect, useState} from "react";
 import {iChoice} from "@/app/interfaces/iChoice";
 import {FaSave} from "react-icons/fa";
 import {MdDelete} from "react-icons/md";
+import {toast} from 'react-hot-toast';
+
 
 interface EditQuestionsProps {
     questionId: number;
@@ -35,6 +37,7 @@ export default function EditChoice({questionId}: EditQuestionsProps) {
                 console.log(responseData);
                 setChoices((prevChoices) => [...prevChoices, responseData]);
                 getChoice();
+                toast.success('Nouveaux choix crée avec succès');
             }
         } catch (error) {
             console.error("Error creating choice", error);
@@ -75,6 +78,8 @@ export default function EditChoice({questionId}: EditQuestionsProps) {
             if (response.ok) {
                 const responseData = await response.json();
                 setChoices(responseData.choices);
+                getChoice();
+
             }
         } catch (error) {
             console.error("Error getting choices", error);
@@ -86,9 +91,14 @@ export default function EditChoice({questionId}: EditQuestionsProps) {
     return (
         <div>
             <h1 className="text-3xl pl-3 pt-3 text-primary">Choix :</h1>
+            <div className="toast">
+                <div className="alert alert-info">
+                    <span>New message arrived.</span>
+                </div>
+            </div>
             {choices?.length > 0 ? <div>
                     {choices?.map((choice) => {
-                            return (
+                        return (
                                 <div key={choice.id}
                                      className="flex align-middle justify-between border border-primary rounded-lg p-10 m-10">
                                     <form className="choiceInputData flex w-1/2 align-middle">
@@ -112,13 +122,20 @@ export default function EditChoice({questionId}: EditQuestionsProps) {
                             )
                         }
                     )}
-                    <button className="btn btn-secondary m-10 ">Ajouter un choix</button>
+                    <button className="btn btn-secondary m-10" onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        createChoice(questionId);
+                    }}>Ajouter un choix
+                    </button>
                 </div>
                 : <div className="makeFirstChocie p-10">
                     <form action="" method="post" onSubmit={(e) => handleCreateChoice(e, questionId)}>
+
                         <label className="form-control">
                             <div className="label">
-                                <span className="label-text text-primary text-2xl w-1/4 m-auto">Saisir un premier choix : </span>
+                            <span
+                                className="label-text text-primary text-2xl w-1/4 m-auto">Saisir un premier choix : </span>
                             </div>
                             <div className="flex-col gap-5 w-1/4 m-auto">
                                 <input type="text" placeholder="Votre premier choix"
