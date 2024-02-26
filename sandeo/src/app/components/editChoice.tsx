@@ -6,15 +6,14 @@ interface EditQuestionsProps {
 }
 
 
-export default function EditChoice(props: EditQuestionsProps) {
+export default function EditChoice({questionId}: EditQuestionsProps) {
+    const [choices, setChoices] = useState<iChoice[]>([]);
 
-    const [questionId, setQuestionId] = useState(props.questionId);
-    const [choices, setChoices] = useState<iChoice[]>();
-    const handleCreateChoice = async (e: React.FormEvent<HTMLFormElement>, questionId: number) => {
+    const handleCreateChoice = async (e: React.FormEvent<HTMLFormElement>, questionID: number) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
         const data = {
-            questionID: questionId,
+            questionID: questionID,
             goodResponse: formData.get("goodResponse") === "on",
             choice: formData.get("choiceText") as string,
         };
@@ -32,21 +31,16 @@ export default function EditChoice(props: EditQuestionsProps) {
             if (response.ok) {
                 const responseData: iChoice = await response.json();
                 console.log(responseData);
-                //refresh the choices
-                setChoices([...choices, responseData.choices])
+                setChoices((prevChoices) => [...prevChoices, responseData]);
             }
         } catch (error) {
             console.error("Error creating choice", error);
         }
     };
 
-
     useEffect(() => {
-        async function getChoice() {
+        const getChoice = async () => {
             try {
-                const data = {
-                    questionId: questionId,
-                };
                 const response = await fetch(
                     `${process.env.NEXT_PUBLIC_API_URL}/api/choice/getAll`,
                     {
@@ -54,22 +48,20 @@ export default function EditChoice(props: EditQuestionsProps) {
                         headers: {
                             "Content-Type": "application/json",
                         },
-                        body: JSON.stringify(data),
+                        body: JSON.stringify({questionID: questionId}),
                     }
                 );
                 if (response.ok) {
                     const responseData = await response.json();
-                    console.log('Tout mes choix : ', responseData)
                     setChoices(responseData.choices);
                 }
             } catch (error) {
                 console.error("Error getting choices", error);
             }
-        }
+        };
 
         getChoice();
-    }, [props.questionId]);
-
+    }, [questionId]);
     return (
         <div>
             {questionId}
@@ -85,7 +77,7 @@ export default function EditChoice(props: EditQuestionsProps) {
                     )}
                 </div>
                 : <div className="makeFirstChocie p-10">
-                    <form action="" method="post" onSubmit={(e) => handleCreateChoice(e, props.questionId)}>
+                    <form action="" method="post" onSubmit={(e) => handleCreateChoice(e, questionId)}>
                         <label className="form-control">
                             <div className="label">
                                 <span className="label-text text-primary text-2xl w-1/4 m-auto">Saisir un premier choix : </span>

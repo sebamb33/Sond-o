@@ -33,6 +33,7 @@ choiceRouter.post("/getAll", async (req, res) => {
         const {questionID} = req.body as {
             questionID: number;
         };
+        console.log('id des questions ', questionID);
         const choices = await AppDataSource.getRepository(Choice).find({
             where: {questionId: questionID},
         });

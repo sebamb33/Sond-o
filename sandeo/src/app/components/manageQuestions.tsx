@@ -53,7 +53,7 @@ export default function ManageQuestions(props: ManageChoiceProps) {
                 <h2 className="text-center text-5xl text-primary pb-20">Questions :</h2>
                 <div
                     className="w-full h-4/5 overflow-auto max-h-[50rem]  p-3  rounded-2xl scrollbar-h-5 scrollbar scrollbar-thumb-secondary scrollbar-track-white scrollbar-thumb-rounded-full">
-                    {questions.map((question) => {
+                    {questions.map((question, index) => {
                         return (
                             <div className="flex flex-col border border-primary rounded-xl mb-14" key={question.id}>
                                 <div className="flex items-center bg-primary rounded-t-lg p-3 gap-5">
@@ -61,7 +61,7 @@ export default function ManageQuestions(props: ManageChoiceProps) {
                                     <MdDeleteOutline className="text-white h-5 w-5"/>
                                     <FaEdit className="text-white h-5 w-5"/>
                                 </div>
-                                <EditChoice questionId={question.id}/>
+                                <EditChoice key={`${question.id}-${index}`} questionId={question.id}/>
                             </div>
                         );
                     })}
