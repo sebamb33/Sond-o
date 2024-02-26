@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {iChoice} from "@/app/interfaces/iChoice";
+import {FaSave} from "react-icons/fa";
+import {MdDelete} from "react-icons/md";
 
 interface EditQuestionsProps {
     questionId: number;
@@ -38,6 +40,26 @@ export default function EditChoice({questionId}: EditQuestionsProps) {
             console.error("Error creating choice", error);
         }
     };
+
+    const createChoice = async (questionId: number) => {
+        const data = {
+            questionID: questionId,
+        };
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/choice/create`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("Success:", data);
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            });
+    }
     const getChoice = async () => {
         try {
             const response = await fetch(
@@ -63,17 +85,34 @@ export default function EditChoice({questionId}: EditQuestionsProps) {
     }, [questionId]);
     return (
         <div>
-            {questionId}
+            <h1 className="text-3xl pl-3 pt-3 text-primary">Choix :</h1>
             {choices?.length > 0 ? <div>
                     {choices?.map((choice) => {
                             return (
-                                <div key={choice.id}>
-                                    <input type="text" defaultValue={choice.choiceText}/>
-                                    <input type="checkbox" defaultChecked={choice.goodResponse}/>
+                                <div key={choice.id}
+                                     className="flex align-middle justify-between border border-primary rounded-lg p-10 m-10">
+                                    <form className="choiceInputData flex w-1/2 align-middle">
+                                        <input type="text" placeholder="Type here" defaultValue={choice.choiceText}
+                                               className="input input-bordered input-primary w-2/3 max-w-xs text-xl text-secondary"/>
+                                        <div className=" h-full">
+                                            <label className="label cursor-pointer">
+                                                <span
+                                                    className="label-text text-primary text-xl pl-4">Bonne réponse : </span>
+                                                <input type="checkbox" defaultChecked={choice.goodResponse}
+                                                       className="checkbox checkbox-primary ml-4"/>
+                                            </label>
+                                        </div>
+                                    </form>
+                                    <div className="buttonChoiceAction flex gap-5">
+                                        <FaSave className="text-primary h-8 w-8 cursor-pointer"/>
+                                        <MdDelete className="text-primary h-8 w-8 cursor-pointer"/>
+                                    </div>
+
                                 </div>
                             )
                         }
                     )}
+                    <button className="btn btn-secondary m-10 ">Ajouter un choix</button>
                 </div>
                 : <div className="makeFirstChocie p-10">
                     <form action="" method="post" onSubmit={(e) => handleCreateChoice(e, questionId)}>
