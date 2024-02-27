@@ -49,7 +49,6 @@ export default function EditChoice({questionId}: EditQuestionsProps) {
     const handleSaveChoice = async (e: React.MouseEvent<HTMLFormElement>,choiceID: number) => {
         e.preventDefault();
         e.stopPropagation();
-        console.log('je modifie le choix', choiceID);
         try{
             const data = {
                 choiceID: choiceID,
@@ -68,7 +67,6 @@ export default function EditChoice({questionId}: EditQuestionsProps) {
             );
             if (response.ok) {
                 const responseData: iChoice = await response.json();
-                console.log(responseData);
                 getChoice();
                 toast.success('Choix modifié avec succès');
             }
@@ -79,7 +77,6 @@ export default function EditChoice({questionId}: EditQuestionsProps) {
     const handleDeleteChoice = async (e: React.MouseEvent<HTMLFormElement>, choiceID: number) => {
         e.preventDefault();
         e.stopPropagation();
-        console.log('je supprime le choix', choiceID);
         try{
             const data = {
                 choiceID: choiceID,
@@ -116,7 +113,7 @@ export default function EditChoice({questionId}: EditQuestionsProps) {
         })
             .then((response) => response.json())
             .then((data) => {
-                toast("oco")
+                toast.success('Premier choix crée pour cette question avec succès');
                 getChoice()
                 console.log("Success:", data);
             })
@@ -198,7 +195,7 @@ export default function EditChoice({questionId}: EditQuestionsProps) {
                                        className="input input-bordered w-full max-w-xs input-primary" name="choiceText"
                                        id="choiceText"/>
                                 <label className="label cursor-pointer">
-                                    <span className="label-text text-primary">Noté:</span>
+                                    <span className="label-text text-primary">Bonne réponse:</span>
                                     <input type="checkbox" name="goodResponse" className=" toggle toggle-secondary"/>
                                 </label>
                                 <button className="btn btn-secondary w-full">Crée le premier choix</button>
