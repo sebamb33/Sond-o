@@ -41,7 +41,36 @@ questionRouter.post("/create", async (req, res) => {
     }
 
 });
-
+questionRouter.delete("/delete", async (req, res) => {
+    const {questionID} = req.body as { questionID: number };
+    if (questionID) {
+        AppDataSource.getRepository(Question)
+            .findOne({
+                where: {
+                    id: questionID
+                }
+            })
+            .then((question) => {
+                if (question) {
+                    AppDataSource.getRepository(Question)
+                        .remove(question)
+                        .then(() => {
+                            res.status(200).json({message: "Question deleted"});
+                        })
+                        .catch((error) => {
+                            console.error("Error deleting question", error);
+                            res.status(500).json({error: "An error occurred while deleting the question."});
+                        });
+                } else {
+                    res.status(404).json({error: "Question not found"});
+                }
+            })
+            .catch((error) => {
+                console.error("Error getting question", error);
+                res.status(500).json({error: "An error occurred while getting the question."});
+            });
+    }
+});
 questionRouter.post("/getAll", async (req, res) => {
     const {formularyID} = req.body as { formularyID: number };
     if (formularyID) {
