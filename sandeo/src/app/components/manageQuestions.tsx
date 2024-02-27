@@ -29,11 +29,12 @@ export default function ManageQuestions(props: ManageChoiceProps) {
             }
         );
         if (response.ok) {
+            toast.success("Question supprimée avec succès");
             const responseData = await response.json();
             setQuestions((prevQuestions) =>
                 prevQuestions.filter((question) => question.id !== questionID)
             );
-            toast.success("Question supprimée avec succès");
+
         }
     };
     useEffect(() => {
@@ -95,6 +96,6 @@ export default function ManageQuestions(props: ManageChoiceProps) {
             </div>
         );
     } else {
-        return <div><p className="w-full">Aucune question</p></div>;
+        return <div><Toaster/><p className="w-full">Aucune question</p></div>;
     }
 }
