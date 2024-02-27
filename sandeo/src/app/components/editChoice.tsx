@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {iChoice} from "@/app/interfaces/iChoice";
 import {FaSave} from "react-icons/fa";
 import {MdDelete} from "react-icons/md";
@@ -12,7 +12,8 @@ interface EditQuestionsProps {
 
 export default function EditChoice({questionId}: EditQuestionsProps) {
     const [choices, setChoices] = useState<iChoice[]>([]);
-
+    const choiceTextRef = useRef<HTMLInputElement>(null);
+    const goodResponseRef = useRef<HTMLInputElement>(null);
     const handleCreateChoice = async (e: React.FormEvent<HTMLFormElement>, questionID: number) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
@@ -44,6 +45,61 @@ export default function EditChoice({questionId}: EditQuestionsProps) {
         }
     };
 
+    //SaveChoice
+    const handleSaveChoice = async (e: React.MouseEvent<HTMLFormElement>,choiceID: number) => {
+        e.preventDefault();
+        e.stopPropagation();
+        try{
+            const data = {
+                choiceID: choiceID,
+                goodResponse: goodResponseRef.current?.checked as boolean,
+                choiceText: choiceTextRef.current?.value as string,
+            };
+            const response = await fetch(
+                `${process.env.NEXT_PUBLIC_API_URL}/api/choice/update`,
+                {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(data),
+                }
+            );
+            if (response.ok) {
+                const responseData: iChoice = await response.json();
+                getChoice();
+                toast.success('Choix modifié avec succès');
+            }
+        }catch (error) {
+            console.error("Error creating choice", error);
+        }
+    }
+    const handleDeleteChoice = async (e: React.MouseEvent<HTMLFormElement>, choiceID: number) => {
+        e.preventDefault();
+        e.stopPropagation();
+        try{
+            const data = {
+                choiceID: choiceID,
+            };
+            const response = await fetch(
+                `${process.env.NEXT_PUBLIC_API_URL}/api/choice/delete`,
+                {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(data),
+                }
+            );
+            if (response.ok) {
+                const responseData: iChoice = await response.json();
+                console.log(responseData);
+                getChoice();
+                toast.success('Choix supprimé avec succès');
+            }
+    }catch (error) {
+        console.error("Error creating choice", error);}
+    };
     const createChoice = async (questionId: number) => {
         const data = {
             questionID: questionId,
@@ -57,7 +113,7 @@ export default function EditChoice({questionId}: EditQuestionsProps) {
         })
             .then((response) => response.json())
             .then((data) => {
-                toast("oco")
+                toast.success('Premier choix crée pour cette question avec succès');
                 getChoice()
                 console.log("Success:", data);
             })
@@ -99,20 +155,20 @@ export default function EditChoice({questionId}: EditQuestionsProps) {
                                 <div key={choice.id}
                                      className="flex align-middle justify-between border border-primary rounded-lg p-10 m-10">
                                     <form className="choiceInputData flex w-1/2 align-middle">
-                                        <input type="text" placeholder="Type here" defaultValue={choice.choiceText}
+                                        <input type="text" placeholder="Mettre le choix ici" name="choiceText" ref={choiceTextRef} defaultValue={choice.choiceText}
                                                className="input input-bordered input-primary w-2/3 max-w-xs text-xl text-secondary"/>
                                         <div className=" h-full">
                                             <label className="label cursor-pointer">
                                                 <span
                                                     className="label-text text-primary text-xl pl-4">Bonne réponse : </span>
-                                                <input type="checkbox" defaultChecked={choice.goodResponse}
+                                                <input type="checkbox"  name="goodResponse" defaultChecked={choice.goodResponse} ref={goodResponseRef}
                                                        className="checkbox checkbox-primary ml-4"/>
                                             </label>
                                         </div>
                                     </form>
                                     <div className="buttonChoiceAction flex gap-5">
-                                        <FaSave className="text-primary h-8 w-8 cursor-pointer"/>
-                                        <MdDelete className="text-primary h-8 w-8 cursor-pointer"/>
+                                        <FaSave className="text-primary h-8 w-8 cursor-pointer" onClick={(event) => handleSaveChoice(event,choice.id)} />
+                                        <MdDelete className="text-primary h-8 w-8 cursor-pointer"onClick={(e)=> handleDeleteChoice(e,choice.id)}/>
                                     </div>
 
                                 </div>
@@ -139,7 +195,7 @@ export default function EditChoice({questionId}: EditQuestionsProps) {
                                        className="input input-bordered w-full max-w-xs input-primary" name="choiceText"
                                        id="choiceText"/>
                                 <label className="label cursor-pointer">
-                                    <span className="label-text text-primary">Noté:</span>
+                                    <span className="label-text text-primary">Bonne réponse:</span>
                                     <input type="checkbox" name="goodResponse" className=" toggle toggle-secondary"/>
                                 </label>
                                 <button className="btn btn-secondary w-full">Crée le premier choix</button>
