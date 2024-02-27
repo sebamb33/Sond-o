@@ -1,6 +1,7 @@
 import express from "express";
 import {AppDataSource} from "../data-source";
 import {Question} from "../entity/Question";
+import {Choice} from "../entity/Choice";
 
 
 const questionRouter = express.Router();
@@ -44,6 +45,24 @@ questionRouter.post("/create", async (req, res) => {
 questionRouter.delete("/delete", async (req, res) => {
     const {questionID} = req.body as { questionID: number };
     if (questionID) {
+        AppDataSource.getRepository(Choice).find({where: {questionId: questionID}})
+            .then((choices) => {
+                if (choices.length > 0) {
+                    AppDataSource.getRepository(Choice)
+                        .remove(choices)
+                        .then(() => {
+                            console.log("Choices deleted");
+                        })
+                        .catch((error) => {
+                            console.error("Error deleting choices", error);
+                            res.status(500).json({error: "An error occurred while deleting the choices."});
+                        });
+                }
+            })
+            .catch((error) => {
+                console.error("Error getting choices", error);
+                res.status(500).json({error: "An error occurred while getting the choices."});
+            });
         AppDataSource.getRepository(Question)
             .findOne({
                 where: {
