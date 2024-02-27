@@ -46,10 +46,11 @@ export default function EditChoice({questionId}: EditQuestionsProps) {
     };
 
     //SaveChoice
-    const handleSaveChoice = async ( choiceID: number) => {
+    const handleSaveChoice = async (e: React.MouseEvent<HTMLFormElement>,choiceID: number) => {
+        e.preventDefault();
+        e.stopPropagation();
         console.log('je modifie le choix', choiceID);
         try{
-            const formData = new FormData(e.currentTarget);
             const data = {
                 choiceID: choiceID,
                 goodResponse: goodResponseRef.current?.checked as boolean,
@@ -142,7 +143,7 @@ export default function EditChoice({questionId}: EditQuestionsProps) {
                                         </div>
                                     </form>
                                     <div className="buttonChoiceAction flex gap-5">
-                                        <FaSave className="text-primary h-8 w-8 cursor-pointer" onClick={() => handleSaveChoice(choice.id)} />
+                                        <FaSave className="text-primary h-8 w-8 cursor-pointer" onClick={(event) => handleSaveChoice(event,choice.id)} />
                                         <MdDelete className="text-primary h-8 w-8 cursor-pointer"/>
                                     </div>
 
