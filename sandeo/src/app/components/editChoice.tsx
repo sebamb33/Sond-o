@@ -76,6 +76,33 @@ export default function EditChoice({questionId}: EditQuestionsProps) {
             console.error("Error creating choice", error);
         }
     }
+    const handleDeleteChoice = async (e: React.MouseEvent<HTMLFormElement>, choiceID: number) => {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log('je supprime le choix', choiceID);
+        try{
+            const data = {
+                choiceID: choiceID,
+            };
+            const response = await fetch(
+                `${process.env.NEXT_PUBLIC_API_URL}/api/choice/delete`,
+                {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(data),
+                }
+            );
+            if (response.ok) {
+                const responseData: iChoice = await response.json();
+                console.log(responseData);
+                getChoice();
+                toast.success('Choix supprimé avec succès');
+            }
+    }catch (error) {
+        console.error("Error creating choice", error);}
+    };
     const createChoice = async (questionId: number) => {
         const data = {
             questionID: questionId,
@@ -144,7 +171,7 @@ export default function EditChoice({questionId}: EditQuestionsProps) {
                                     </form>
                                     <div className="buttonChoiceAction flex gap-5">
                                         <FaSave className="text-primary h-8 w-8 cursor-pointer" onClick={(event) => handleSaveChoice(event,choice.id)} />
-                                        <MdDelete className="text-primary h-8 w-8 cursor-pointer"/>
+                                        <MdDelete className="text-primary h-8 w-8 cursor-pointer"onClick={(e)=> handleDeleteChoice(e,choice.id)}/>
                                     </div>
 
                                 </div>
