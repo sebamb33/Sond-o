@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import IFormulary from "@/app/interfaces/IFormulary";
 import ManageQuestions from "@/app/components/manageQuestions";
+import toast, {Toaster} from "react-hot-toast";
 
 interface ManageQuestionsProps {
     formularyID: number;
@@ -20,7 +21,6 @@ export default function ManageFormularyAndQuestions(props: ManageQuestionsProps)
           manyChoice: formData.get("manyChoice"),
       };
         console.log(data)
-      //TODO make route for create question
         const response = await fetch(
             `${process.env.NEXT_PUBLIC_API_URL}/api/question/create`,
             {
@@ -31,6 +31,11 @@ export default function ManageFormularyAndQuestions(props: ManageQuestionsProps)
                 body: JSON.stringify(data),
             }
         );
+        if (response.ok) {
+            const responseData = await response.json();
+            console.log('Ce que api me retourne ', responseData);
+            toast.success('Question ajoutée avec succès');
+        }
     } catch (error) {}
   };
     const handleFormularySubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -57,7 +62,7 @@ export default function ManageFormularyAndQuestions(props: ManageQuestionsProps)
             if (response.ok) {
                 const responseData = await response.json();
                 setFormulary(responseData.formulary as IFormulary);
-                alert('Formulaire modifié');
+                toast.success('Formulaire modifié avec succès');
             }
         } catch (error) {
             console.error("Error saving formulary", error)
@@ -93,6 +98,7 @@ export default function ManageFormularyAndQuestions(props: ManageQuestionsProps)
 
   return (
       <div className="ManageQuestion flex-col w-full">
+          <Toaster/>
           <div className="makeQuestionFormulary flex w-full justify-center pt-5 gap-6">
           <div className="formularyParams w-1/4 bg-primary p-6 rounded-xl ">
               <h2 className="text-white text-2xl">Paramètres du formulaire :</h2>
@@ -131,7 +137,7 @@ export default function ManageFormularyAndQuestions(props: ManageQuestionsProps)
           </form>
           </div>
           <div className="w-full">
-              <ManageQuestions formularyID={props.formularyID}/>
+              <ManageQuestions formularyID={formulary?.id}/>
           </div>
       </div>
   );
