@@ -3,10 +3,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Caveat+Brush&display=swap');
 
 /* Utilisation de Tailwind CSS */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 /* Utilisation de la police Nunito pour le corps du document */
 * {
     font-family: 'Nunito', sans-serif;

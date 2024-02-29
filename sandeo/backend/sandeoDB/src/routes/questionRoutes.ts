@@ -109,4 +109,41 @@ questionRouter.post("/getAll", async (req, res) => {
     }
 });
 
+questionRouter.put("/update", async (req, res) => {
+    const {questionID, questionText, manyChoice} = req.body as {
+        questionID: number,
+        questionText: string,
+        manyChoice: boolean
+    };
+    if (questionID) {
+        AppDataSource.getRepository(Question)
+            .findOne({
+                where: {
+                    id: questionID
+                }
+            })
+            .then((question) => {
+                if (question) {
+                    question.questionText = questionText;
+                    question.hasManyChoice = manyChoice;
+                    AppDataSource.getRepository(Question)
+                        .save(question)
+                        .then((savedQuestion) => {
+                            res.status(200).json({question: savedQuestion});
+                        })
+                        .catch((error) => {
+                            console.error("Error saving question", error);
+                            res.status(500).json({error: "An error occurred while saving the question."});
+                        });
+                } else {
+                    res.status(404).json({error: "Question not found"});
+                }
+            })
+            .catch((error) => {
+                console.error("Error getting question", error);
+                res.status(500).json({error: "An error occurred while getting the question."});
+            });
+    }
+});
+
 export default questionRouter;
