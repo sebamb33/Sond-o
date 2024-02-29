@@ -7,6 +7,7 @@ import toast, {Toaster} from "react-hot-toast";
 
 interface ManageChoiceProps {
     formularyID: number;
+    reload: boolean;
 }
 
 export default function ManageQuestions(props: ManageChoiceProps) {
@@ -37,40 +38,32 @@ export default function ManageQuestions(props: ManageChoiceProps) {
 
         }
     };
-    useEffect(() => {
-        const fetchChoices = async () => {
-            if (formularyID) {
-                const data = {
-                    formularyID: formularyID,
-                };
-                const responseQuestion = await fetch(`{process.env.NEXT_PUBLIC_API_URL}/api/question/getAll`
-                    , {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify(data),
-                    });
-                const response = await fetch(
-                    `${process.env.NEXT_PUBLIC_API_URL}/api/question/getAll`,
-                    {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify(data),
-                    }
-                );
-
-                if (response.ok) {
-                    const responseData = await response.json();
-                    setQuestions(responseData.questions);
+    const fetchChoices = async () => {
+        if (formularyID) {
+            const data = {
+                formularyID: formularyID,
+            };
+            const response = await fetch(
+                `${process.env.NEXT_PUBLIC_API_URL}/api/question/getAll`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(data),
                 }
-            }
-        };
+            );
 
+            if (response.ok) {
+                const responseData = await response.json();
+                setQuestions(responseData.questions);
+            }
+        }
+    };
+
+    useEffect(() => {
         fetchChoices();
-    }, [formularyID]);
+    }, [formularyID, props.reload]);
     if (questions.length > 0) {
         return (
 

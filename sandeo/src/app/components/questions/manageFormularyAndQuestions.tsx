@@ -8,9 +8,10 @@ interface ManageQuestionsProps {
 }
 
 export default function ManageFormularyAndQuestions(props: ManageQuestionsProps) {
-
     const [formulary, setFormulary] = useState<IFormulary>();
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const [reload, setReload] = useState(false);
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       const {formularyID} = props;
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -20,7 +21,6 @@ export default function ManageFormularyAndQuestions(props: ManageQuestionsProps)
           formularyID: formularyID,
           manyChoice: formData.get("manyChoice"),
       };
-        console.log(data)
         const response = await fetch(
             `${process.env.NEXT_PUBLIC_API_URL}/api/question/create`,
             {
@@ -33,7 +33,8 @@ export default function ManageFormularyAndQuestions(props: ManageQuestionsProps)
         );
         if (response.ok) {
             const responseData = await response.json();
-            console.log('Ce que api me retourne ', responseData);
+            setReload(prev => !prev);
+
             toast.success('Question ajoutée avec succès');
         }
     } catch (error) {}
@@ -65,7 +66,6 @@ export default function ManageFormularyAndQuestions(props: ManageQuestionsProps)
                 toast.success('Formulaire modifié avec succès');
             }
         } catch (error) {
-            console.error("Error saving formulary", error)
         }
     };
 
@@ -137,7 +137,9 @@ export default function ManageFormularyAndQuestions(props: ManageQuestionsProps)
           </form>
           </div>
           <div className="w-full">
-              <ManageQuestions formularyID={formulary?.id}/>
+              <ManageQuestions formularyID={props.formularyID} reload={reload}/>
+
+
           </div>
       </div>
   );
