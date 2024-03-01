@@ -1,4 +1,5 @@
 import {useState} from "react";
+import Cookies from "js-cookie";
 
 type UserDataType = {
     firstname: string;
@@ -14,6 +15,34 @@ const getUserData = () => {
     }
     const userDataEmpty: UserDataType = {} as UserDataType;
     return userDataEmpty;
+};
+const updateUser = async (e) => {
+    e.preventDefault();
+     const DataUpdated= new FormData(e.currentTarget);
+     const userData = {
+        firstname: DataUpdated.get("firstname") as string,
+        lastname: DataUpdated.get("lastname") as string,
+        mail: DataUpdated.get("mail") as string,
+         token: Cookies.get("token"),
+     }
+    try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/user/update`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(userData),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+            })
+            .catch((error) => {
+                console.error("Error updating user", error);
+            });
+    }catch (error) {
+        console.error("Error updating user", error);
+    }
 };
 
 
