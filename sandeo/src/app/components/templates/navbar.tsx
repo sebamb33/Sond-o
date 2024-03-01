@@ -69,7 +69,9 @@ const Navbar = ({ children }: NavbarProps) => {
               className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
             >
               <li>
-                <a className="justify-between">Mon profil ({userData?.mail})</a>
+                <a className="justify-between" onClick={event => {
+                  router.push('/accountManage')
+                }}>Mon profil ({userData?.mail})</a>
               </li>
               <li>
                 <a>Parametres</a>
