@@ -44,6 +44,31 @@ const updateUser = async (e) => {
         console.error("Error updating user", error);
     }
 };
+const deleteUser = async (e) => {
+    e.preventDefault();
+    const userData = {
+        token: Cookies.get("token"),
+    }
+    try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/user/delete`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(userData),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+            })
+            .catch((error) => {
+                console.error("Error deleting user", error);
+            });
+    } catch (error) {
+        console.error("Error deleting user", error);
+    }
+
+}
 
 
 const FormularyAccountClient = () => {
