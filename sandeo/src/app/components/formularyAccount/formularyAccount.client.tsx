@@ -76,11 +76,11 @@ const deleteUser = async (e: any) => {
 };
 
 const FormularyAccountClient = () => {
-  const showModale = (e) => {
+  const showModale = (e: any) => {
     e.preventDefault();
     setModaleVisible(true);
   };
-  const closeModale = (e) => {
+  const closeModale = (e: any) => {
     e.preventDefault();
     setModaleVisible(false);
   };
