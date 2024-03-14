@@ -115,7 +115,6 @@ userRouter.post("/verifyToken", async (req, res) => {
   try {
     if (req.body.token) {
       const decodedToken = await verifyToken(req.body.token);
-      console.log("token decrypte : ", decodedToken);
       if (decodedToken.hasOwnProperty("userID")) {
         interface Token {
           userID: number;
@@ -131,7 +130,6 @@ userRouter.post("/verifyToken", async (req, res) => {
           //remove password
           delete user.password;
         }
-        console.log("User find", user);
         res.status(200).json({ user });
       }
     } else {
@@ -146,5 +144,69 @@ userRouter.post("/verifyToken", async (req, res) => {
   }
 });
 
+//Pour mettre à jour un utilisateur
+
+userRouter.put("/update", async (req, res) => {
+  try {
+    const { firstname, lastname, mail, password } = req.body?.userData as {
+      token: string;
+      firstname: string;
+      lastname: string;
+      mail: string;
+      password: string;
+    };
+    const token = req.body?.token;
+
+    if (token) {
+      const decodedToken = await verifyToken(token);
+      if (decodedToken.hasOwnProperty("userID")) {
+        interface Token {
+          userID: number;
+        }
+
+        const userID: number = (decodedToken as Token).userID;
+
+        const user = await AppDataSource.getRepository("User").findOne({
+          where: {
+            id: userID,
+          },
+        });
+        if (user) {
+          if (firstname && firstname.length > 0) {
+            user.firstname = firstname;
+          }
+          if (lastname && lastname.length > 0) {
+            user.lastname = lastname;
+          }
+          console.log("mail", mail);
+          if (mail && mail.length > 0) {
+            //check if mail is not already used and is not the id of the user
+            const existingUser = await AppDataSource.getRepository(User)
+              .createQueryBuilder("user")
+              .where("user.mail = :mail", { mail })
+              .andWhere("user.id != :id", { id: userID })
+              .getOne();
+
+            if (existingUser) {
+              return res
+                .status(409)
+                .json({ message: "Account with this mail" });
+            } else {
+              user.mail = mail;
+            }
+          }
+          if (password && password.length > 0) {
+            user.password = await hashPassword(password);
+          }
+
+          await AppDataSource.getRepository("User").save(user);
+          res.status(200).json({ user });
+        }
+      }
+    }
+  } catch {
+    return res.status(500).json({ error: "Error when update user" });
+  }
+});
 // Exportez le routeur
 export default userRouter;
