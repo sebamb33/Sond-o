@@ -146,5 +146,50 @@ userRouter.post("/verifyToken", async (req, res) => {
   }
 });
 
+//Pour mettre à jour un utilisateur
+
+userRouter.put("/update", async (req, res) => {
+  try {
+    const { token, firstname, lastname, mail, password } = req.body as {
+      token: string;
+      firstname: string;
+      lastname: string;
+      mail: string;
+      password: string;
+    };
+    if (token) {
+      const decodedToken = await verifyToken(token);
+      if (decodedToken.hasOwnProperty("userID")) {
+        interface Token {
+          userID: number;
+        }
+        const userID: number = (decodedToken as Token).userID;
+        const user = await AppDataSource.getRepository("User").findOne({
+          where: {
+            id: userID,
+          },
+        });
+        if (user) {
+          if (firstname) {
+            user.firstname = firstname;
+          }
+          if (lastname) {
+            user.lastname = lastname;
+          }
+          if (mail) {
+            user.mail = mail;
+          }
+          if (password) {
+            user.password = await hashPassword(password);
+          }
+          await AppDataSource.getRepository("User").save(user);
+          res.status(200).json({ user });
+        }
+      }
+    }
+  } catch {
+    return res.status(500).json({ error: "Error when update user" });
+  }
+});
 // Exportez le routeur
 export default userRouter;
