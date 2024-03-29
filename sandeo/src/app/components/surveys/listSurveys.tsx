@@ -30,7 +30,13 @@ export default function ListSurveys() {
     getAllFormulary();
     return (
         <div>
-
+            {surveys?.map((survey) => (
+                <div key={survey.id}>
+                    <h1>{survey.name}</h1>
+                    <p>{survey.isNoted ? "Noté" : "Non noté"}</p>
+                    <p>{survey.isPrivate ? "Privé" : "Public"}</p>
+                </div>)
+            )}
         </div>
     );
 }
