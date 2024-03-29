@@ -1,4 +1,4 @@
-import { useRouter } from 'next/router';
+import {useRouter} from 'next/router';
 
 export default function Card() {
     const router = useRouter();
@@ -19,7 +19,7 @@ export default function Card() {
                   <h2 className="card-title">Mes sondages</h2>
                   <p>Voir l'ensemble des sondages que j'ai crée et les informations associés à celles-ci </p>
                   <div className="card-actions justify-end">
-                      <button className="btn">Voir mes sondages</button>
+                      <button className="btn" onClick={() => router.push('/surveys')}>Voir mes sondages</button>
                   </div>
               </div>
           </div>

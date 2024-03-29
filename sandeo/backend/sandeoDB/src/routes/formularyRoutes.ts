@@ -168,6 +168,27 @@ formularyRouter.put("/update", async (req, res) => {
     }
 });
 
+//Get all formularies from user id
+
+formularyRouter.post("/getAll", async (req, res) => {
+
+    try {
+        const {token} = req.body as { token: string };
+
+        interface DecodedType {
+            userID?: number;
+        }
+
+        let decoded: DecodedType;
+        decoded = await verifyToken(token);
+        const formularies = await AppDataSource.getRepository(Formulary).find({where: {userId: decoded.userID}});
+        res.status(200).json(formularies);
+    } catch (error) {
+        res.status(500).json({
+            error: "Error when getting formularies",
+        });
+    }
+});
 
 
 export default formularyRouter;
