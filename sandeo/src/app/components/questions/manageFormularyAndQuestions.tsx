@@ -11,6 +11,8 @@ export default function ManageFormularyAndQuestions(props: ManageQuestionsProps)
     const [formulary, setFormulary] = useState<IFormulary>();
     const [reload, setReload] = useState(false);
 
+
+    //Handle submit for question
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       const {formularyID} = props;
     e.preventDefault();
