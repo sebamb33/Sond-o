@@ -57,7 +57,7 @@ const FormularyManage = () => {
     return (
         <Navbar>
       <div>
-        <ManageFormularyAndQuestions formularyID={formularyid}/>
+        <ManageFormularyAndQuestions formularyID={Number(formularyid)}/>
       </div>
         </Navbar>
     );
