@@ -12,26 +12,34 @@ export default function LoginClient() {
   };
 
   return (
-    <div className="formLogin  bg-white rounded-lg flex-col justify-center items-center align m-auto w-4/12 p-3">
-      <div className="formHeader flex justify-around ">
-        <h1 className="text-6xl pt-5 titleWebsite">Sandeo</h1>
-        <img src="/logoSandeo.svg" alt="logo application" className="w-16" />
+    <div className="flex w-full">
+      <div className="w-1/2 logo-part flex justify-center align-middle m-auto  ">
+        <div className="appName flex h-[5em]">
+          <h1 className="text-6xl pt-5 titleWebsite h-5">Sandeo</h1>
+          <img
+            src="/logoSandeo.svg"
+            alt="logo application"
+            className="w-16 h-[5em]"
+          />
+        </div>
       </div>
-      <div className="buttonChangeForm flex justify-center mt-6">
-        <button
-          className="p-2 border-2 border-secondary rounded-tl-lg rounded-bl-lg"
-          onClick={changeform}
-        >
-          Connexion
-        </button>
-        <button
-          className="p-2 border-2 border-secondary rounded-tr-lg rounded-br-lg"
-          onClick={changeform}
-        >
-          Inscription
-        </button>
+      <div className="w-1/2 flex flex-col  h-fit m-auto ">
+        <div className="buttonForm flex align-middle justify-center ">
+          <button
+            className="p-3 border-4 border-grey rounded-tl-lg rounded-bl-lg hover:bg-primary hover:text-white font-bold w-1/4"
+            onClick={changeform}
+          >
+            Connexion
+          </button>
+          <button
+            className="p-3 border-4 border-grey rounded-tr-lg rounded-br-lg hover:bg-primary hover:text-white font-bold w-1/4"
+            onClick={changeform}
+          >
+            Inscription
+          </button>
+        </div>
+        {connection ? <FormConnection /> : <FormCreateAccount />}
       </div>
-      {connection ? <FormConnection /> : <FormCreateAccount />}
     </div>
   );
 }
