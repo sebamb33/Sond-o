@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import router from "next/router";
 import Cookies from "js-cookie";
 
 const withAuth = (WrappedComponent: React.ComponentType<any>) => {
   const WithAuthComponent: React.FC<any> = (props) => {
-    const [isLoading, setIsLoading] = useState(true);
-
     useEffect(() => {
       const verifyToken = async () => {
         let token = Cookies.get("token");
@@ -22,26 +20,23 @@ const withAuth = (WrappedComponent: React.ComponentType<any>) => {
                   "Content-Type": "application/json",
                 },
                 body: JSON.stringify(data),
-              }
+              },
             );
             if (response) {
-              setIsLoading(false);
               //set to local storage
               const userData = await response.json();
 
               if (userData.user) {
                 sessionStorage.setItem(
                   "userData",
-                  JSON.stringify(userData.user)
+                  JSON.stringify(userData.user),
                 );
-                if(sessionStorage.getItem("userData") === null){
+                if (sessionStorage.getItem("userData") === null) {
                   router.push("/login");
                 }
               }
             }
             if (!response.ok) throw new Error("Token verification failed");
-
-            setIsLoading(false); // Token is valid
           } catch (error) {
             console.error("Token verification error:", error);
             router.push("/login");
@@ -52,15 +47,11 @@ const withAuth = (WrappedComponent: React.ComponentType<any>) => {
       verifyToken();
     }, []);
 
-    if (isLoading) {
-      return <span className="loading loading-spinner text-primary w-full h-full m-auto"></span>;
-    }
-
     return <WrappedComponent {...props} />;
   };
 
   WithAuthComponent.displayName = `WithAuth(${getDisplayName(
-    WrappedComponent
+    WrappedComponent,
   )})`;
 
   return WithAuthComponent;
