@@ -1,6 +1,7 @@
 import React from "react";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
+
 export default function Form() {
   Cookies.remove("token");
   const router = useRouter();
@@ -23,7 +24,7 @@ export default function Form() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(data),
-        }
+        },
       );
 
       if (response.ok) {
@@ -40,28 +41,31 @@ export default function Form() {
   return (
     <form onSubmit={handleSubmit} className="flex-row rounded-md p-20">
       <div className="h-36 flex-row">
-        <label className="text-primary text-lg font-semibold" htmlFor="email">
-          Email:
+        <label className="input input-bordered flex items-center gap-2 border-primary text-secondary">
+          Email
+          <input
+            type="email"
+            name="email"
+            id="email"
+            className=" w-full rounded-lg  px-2 py-1 "
+          />
         </label>
-        <input
-          type="email"
-          name="email"
-          id="email"
-          className="border-secondary w-full rounded-lg border-4 px-2 py-1"
-        />
       </div>
       <div className="h-36 flex-row">
-        <label className="text-primary text-lg font-semibold" htmlFor="email">
-          Mot de passe:
+        <label className="input input-bordered flex items-center gap-2 border-primary text-secondary">
+          Mot de passe
+          <input
+            type="password"
+            name="password"
+            id="password"
+            className="w-1/2 rounded-lg  px-2 py-1 "
+          />
         </label>
-        <input
-          type="password"
-          name="password"
-          id="password"
-          className="border-secondary w-full rounded-lg border-4 px-2 py-1"
-        />
       </div>
-      <button type="submit" className="bg-secondary h-14 w-36 rounded-lg">
+      <button
+        type="submit"
+        className="btn btn-outline btn-primary hover:bg-primary w-1/2"
+      >
         Se connecter
       </button>
     </form>
