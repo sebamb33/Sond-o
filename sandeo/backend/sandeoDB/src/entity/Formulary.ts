@@ -1,40 +1,33 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  ManyToOne,
-  OneToMany,
-  CreateDateColumn,
-} from "typeorm";
-import { User } from "./User";
-import { Question } from "./Question";
+import {Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn,} from "typeorm";
+import {User} from "./User";
+import {Question} from "./Question";
 
 @Entity()
 export class Formulary {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @Column({ nullable: true })
   name?: string;
 
   @CreateDateColumn()
-  createdAt: Date;
+  createdAt!: Date;
 
   @Column()
-  userId: number;
+  userId!: number;
 
   @Column({ nullable: true })
   status?: string;
 
   @Column({ default: false })
-  isNoted: boolean;
+  isNoted!: boolean;
 
   @Column({ default: false })
-  isPrivate: boolean;
+  isPrivate!: boolean;
 
   @ManyToOne(() => User, (user) => user.formularies)
-  user: User;
+  user!: User;
 
   @OneToMany(() => Question, (question) => question.formulary)
-  questions: Question[];
+  questions!: Question[];
 }

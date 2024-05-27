@@ -1,17 +1,22 @@
 import React, {useEffect, useRef, useState} from "react";
-import {iChoice} from "@/app/interfaces/iChoice";
 import {FaSave} from "react-icons/fa";
 import {MdDelete} from "react-icons/md";
 import toast, {Toaster} from 'react-hot-toast';
-
 
 interface EditQuestionsProps {
     questionId: number;
 }
 
 
+interface IChoice {
+    id: number;
+    choiceText: string;
+    questionID: number;
+    goodResponse: boolean;
+}
+
 export default function EditChoice({questionId}: EditQuestionsProps) {
-    const [choices, setChoices] = useState<iChoice[]>([]);
+    const [choices, setChoices] = useState<IChoice[]>([]);
     const choiceTextRef = useRef<HTMLInputElement>(null);
     const goodResponseRef = useRef<HTMLInputElement>(null);
     const handleCreateChoice = async (e: React.FormEvent<HTMLFormElement>, questionID: number) => {
@@ -34,7 +39,7 @@ export default function EditChoice({questionId}: EditQuestionsProps) {
                 }
             );
             if (response.ok) {
-                const responseData: iChoice = await response.json();
+                const responseData: IChoice = await response.json();
                 console.log(responseData);
                 setChoices((prevChoices) => [...prevChoices, responseData]);
                 getChoice();
@@ -46,7 +51,7 @@ export default function EditChoice({questionId}: EditQuestionsProps) {
     };
 
     //SaveChoice
-    const handleSaveChoice = async (e: React.MouseEvent<HTMLFormElement>,choiceID: number) => {
+    const handleSaveChoice = async (e: React.MouseEvent<SVGElement>, choiceID: number) => {
         e.preventDefault();
         e.stopPropagation();
         try{
@@ -66,7 +71,7 @@ export default function EditChoice({questionId}: EditQuestionsProps) {
                 }
             );
             if (response.ok) {
-                const responseData: iChoice = await response.json();
+                const responseData: IChoice = await response.json();
                 getChoice();
                 toast.success('Choix modifié avec succès');
             }
@@ -74,7 +79,7 @@ export default function EditChoice({questionId}: EditQuestionsProps) {
             console.error("Error creating choice", error);
         }
     }
-    const handleDeleteChoice = async (e: React.MouseEvent<HTMLFormElement>, choiceID: number) => {
+    const handleDeleteChoice = async (e: React.MouseEvent<SVGElement>, choiceID: number) => {
         e.preventDefault();
         e.stopPropagation();
         try{
@@ -92,7 +97,7 @@ export default function EditChoice({questionId}: EditQuestionsProps) {
                 }
             );
             if (response.ok) {
-                const responseData: iChoice = await response.json();
+                const responseData: IChoice = await response.json();
                 console.log(responseData);
                 getChoice();
                 toast.success('Choix supprimé avec succès');

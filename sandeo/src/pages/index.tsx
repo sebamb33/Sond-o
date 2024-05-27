@@ -5,7 +5,7 @@ import LoginClient from "@/app/components/Login/Login.client";
 
 export default function index() {
   return (
-    <div className="flex h-screen bg-primary bg-custom-gradient">
+    <div className="flex h-screen ">
       <LoginClient />
     </div>
   );

@@ -1,22 +1,23 @@
 import express from "express";
 import {AppDataSource} from "../data-source";
-import jwt from "jsonwebtoken";
 import {Formulary} from "../entity/Formulary";
+import jwt, {Secret} from "jsonwebtoken";
 
 const formularyRouter = express.Router();
-const jwtSecret = process.env.JWT_SECRET;
+const jwtSecret: Secret = process.env.JWT_SECRET || "default_secret";
 
-function verifyToken(token) {
-  return new Promise((resolve, reject) => {
-    jwt.verify(token, jwtSecret, (err, decoded) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(decoded);
-      }
+function verifyToken(token: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+        jwt.verify(token, jwtSecret, (err, decoded) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(decoded);
+            }
+        });
     });
-  });
 }
+
 formularyRouter.post("/create", async (req, res) => {
   try {
     const { token, name, isPrivate, isNoted } = req.body as {
@@ -38,7 +39,7 @@ formularyRouter.post("/create", async (req, res) => {
     if (decoded.hasOwnProperty("userID")) {
       const decodedID = { id: decoded?.userID };
       let newFormulary = new Formulary();
-      newFormulary.userId = decodedID.id;
+        newFormulary.userId = decodedID.id || 0;
       newFormulary.name = name;
       newFormulary.isPrivate = isPrivate;
       newFormulary.isNoted = isNoted;
@@ -134,7 +135,7 @@ formularyRouter.get("/getFormulary", async (req, res) => {
         console.error("Error when getting formulary", error);
         res.status(500).json({
             error: "Error when getting formulary",
-            message: error.message
+            message: error
         });
     }
 });

@@ -1,17 +1,11 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  ManyToOne,
-  OneToMany,
-} from "typeorm";
-import { Formulary } from "./Formulary";
-import { Choice } from "./Choice";
+import {Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn,} from "typeorm";
+import {Formulary} from "./Formulary";
+import {Choice} from "./Choice";
 
 @Entity()
 export class Question {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @Column({ nullable: true })
   questionText?: string;
@@ -26,17 +20,17 @@ export class Question {
   haveRespond?: number;
 
   @Column()
-  formularyId: number;
+  formularyId!: number;
 
   @Column({ nullable: true })
   order?: number;
 
   @Column({ default: false })
-  hasManyChoice: boolean;
+  hasManyChoice!: boolean;
 
   @ManyToOne(() => Formulary, (formulary) => formulary.questions)
-  formulary: Formulary;
+  formulary!: Formulary;
 
   @OneToMany(() => Choice, (choice) => choice.question)
-  choices: Choice[];
+  choices!: Choice[];
 }

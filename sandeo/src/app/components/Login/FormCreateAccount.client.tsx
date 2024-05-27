@@ -29,7 +29,7 @@ export default function FormCreateAccount() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(data),
-        }
+        },
       );
 
       if (response.ok) {
@@ -47,60 +47,54 @@ export default function FormCreateAccount() {
   return (
     <form onSubmit={handleSubmit} className="flex-row p-20 rounded-md">
       <div className="flex-row h-36">
-        <label
-          className="text-lg font-semibold text-primary"
-          htmlFor="firstname"
-        >
-          Nom:
+        <label className="input input-bordered flex items-center gap-2 border-primary text-secondary">
+          Nom :
+          <input
+            type="text"
+            name="firstname"
+            id="firstname"
+            className="w-1/2 px-2 py-1  rounded-lg "
+          />
         </label>
-        <input
-          type="text"
-          name="firstname"
-          id="firstname"
-          className="w-full px-2 py-1 border-4 rounded-lg border-secondary"
-        />
       </div>
       <div className="flex-row h-36">
-        <label
-          className="text-lg font-semibold text-primary"
-          htmlFor="lastname"
-        >
-          Prénom:
+        <label className="input input-bordered flex items-center gap-2 border-primary text-secondary">
+          Prénom :
+          <input
+            type="text"
+            name="lastname"
+            id="lastname"
+            className="w-1/2 px-2 py-1  rounded-lg "
+          />
         </label>
-        <input
-          type="text"
-          name="lastname"
-          id="lastname"
-          className="w-full px-2 py-1 border-4 rounded-lg border-secondary"
-        />
       </div>
       <div className="flex-row h-36">
-        <label className="text-lg font-semibold text-primary" htmlFor="email">
-          Email:
+        <label className="input input-bordered flex items-center gap-2 border-primary text-secondary">
+          Email :
+          <input
+            type="email"
+            name="email"
+            id="email"
+            className="w-1/2 px-2 py-1  rounded-lg "
+          />
         </label>
-        <input
-          type="email"
-          name="email"
-          id="email"
-          className="w-full px-2 py-1 border-4 rounded-lg border-secondary"
-        />
       </div>
       <div className="flex-row h-36">
-        <label
-          className="text-lg font-semibold text-primary"
-          htmlFor="password"
-        >
-          Mot de passe:
+        <label className="input input-bordered flex items-center gap-2 border-primary text-secondary">
+          Mot de passe :
+          <input
+            type="password"
+            name="password"
+            id="password"
+            className="px-2 py-1 w-1/2  rounded-lg"
+          />
         </label>
-        <input
-          type="password"
-          name="password"
-          id="password"
-          className="w-full px-2 py-1 border-4 rounded-lg border-secondary"
-        />
       </div>
 
-      <button type="submit" className="rounded-lg bg-secondary w-36 h-14">
+      <button
+        type="submit"
+        className="btn btn-outline btn-primary hover:bg-primary w-1/2"
+      >
         inscrire
       </button>
     </form>

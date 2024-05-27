@@ -1,16 +1,10 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  OneToMany,
-  CreateDateColumn,
-} from "typeorm";
-import { Formulary } from "./Formulary";
+import {Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn,} from "typeorm";
+import {Formulary} from "./Formulary";
 
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @Column({ nullable: true })
   firstname?: string;
@@ -19,7 +13,7 @@ export class User {
   lastname?: string;
 
   @Column({ default: "" })
-  password: string;
+  password?: string;
 
   @Column({ nullable: true })
   mail?: string;
@@ -28,11 +22,11 @@ export class User {
   profilePicture?: string;
 
   @CreateDateColumn()
-  createdAt: Date;
+  createdAt!: Date;
 
   @Column({ default: false })
-  verifiedAccount: boolean;
+  verifiedAccount!: boolean;
 
   @OneToMany(() => Formulary, (formulary) => formulary.user)
-  formularies: Formulary[];
+  formularies!: Formulary[];
 }

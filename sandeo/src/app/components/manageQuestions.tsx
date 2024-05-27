@@ -64,7 +64,7 @@ export default function ManageQuestions(props: ManageChoiceProps) {
             setUpdateQuestions(false);
         }
     }
-    const fetchChoices = async () => {
+    const fetchChoices = async () => { 
         if (formularyID) {
             const data = {
                 formularyID: formularyID,

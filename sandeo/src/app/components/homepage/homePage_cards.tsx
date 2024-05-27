@@ -17,7 +17,7 @@ export default function Card() {
           <div className="card w-96 bg-primary text-primary-content min-h-72 md:w-full lg:w-96">
               <div className="card-body">
                   <h2 className="card-title">Mes sondages</h2>
-                  <p>Voir l'ensemble des sondages que j'ai crée et les informations associés à celles-ci </p>
+                  <p>Voir l ensemble des sondages que j ai crée et les informations associés à celles-ci </p>
                   <div className="card-actions justify-end">
                       <button className="btn" onClick={() => router.push('/surveys')}>Voir mes sondages</button>
                   </div>
